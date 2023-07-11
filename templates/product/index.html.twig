@@ -9,12 +9,16 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Page Products</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/shopping_demo/src/Controller/ProductController.php'|file_link(0) }}">src/Controller/ProductController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/shopping_demo/templates/product/index.html.twig'|file_link(0) }}">templates/product/index.html.twig</a></code></li>
-    </ul>
+    {% if products is not empty %}
+        Voici une liste de produits en exemple :
+
+        <ul>
+            {% for product in products %}
+                <li>{{ product.productName }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </div>
 {% endblock %}
