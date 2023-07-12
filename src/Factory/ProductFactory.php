@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use Faker\Factory;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -44,11 +45,12 @@ final class ProductFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
+        $faker = Factory::create('fr_FR');
         return [
-            'description' => self::faker()->text(255),
-            'picturesUrls' => self::faker()->text(255),
-            'price' => self::faker()->randomFloat(),
-            'productName' => self::faker()->text(255),
+            'description' => $faker->realText(255),
+            'picturesUrls' => $faker->url(),
+            'price' => $faker->randomFloat(2),
+            'productName' => $faker->word(),
         ];
     }
 
