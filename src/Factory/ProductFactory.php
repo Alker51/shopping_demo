@@ -46,11 +46,16 @@ final class ProductFactory extends ModelFactory
     protected function getDefaults(): array
     {
         $faker = Factory::create('fr_FR');
+        $name = $faker->word();
+        $desc = $faker->realText(255);
+        $price = $faker->randomFloat(2);
+        $picture = 'https://ui-avatars.com/api/?background=random&rounded=true&size=512&name='. $name;
+
         return [
-            'description' => $faker->realText(255),
-            'picturesUrls' => $faker->url(),
-            'price' => $faker->randomFloat(2),
-            'productName' => $faker->word(),
+            'description' => $desc,
+            'picturesUrls' => $picture,
+            'price' => $price,
+            'productName' => $name
         ];
     }
 
