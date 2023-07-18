@@ -2,23 +2,22 @@
 
 {% block title %}Hello ProductController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block stylesheets %}
+    <link href="../../public/styles/productsStyle.css" rel="stylesheet">
+{% endblock %}
 
-<div class="example-wrapper">
+{% block body %}
+<div class="productList">
     <h1>Page Products</h1>
 
     {% if products is not empty %}
         Voici une liste de produits en exemple :
 
-        <ul>
+        <ol>
             {% for product in products %}
-                <li>{{ product.productName }}</li>
+                <li><img id="productImage" src="{{ product.picturesUrls }}" alt="{{ product.productName }}"/> -- {{ product.productName }} -- PRIX : {{ product.price }} € </li>
             {% endfor %}
-        </ul>
+        </ol>
     {% endif %}
 </div>
 {% endblock %}
