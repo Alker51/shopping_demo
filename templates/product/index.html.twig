@@ -10,20 +10,18 @@
 <div class="productList">
     <h1>Page Products</h1>
 
-
-
     {% if products is not empty %}
         {% if search is not empty %}
             {% if products|length > 1 %} <h2>Produit trouvé pour '{{ search }}'</h2> {% else %} <h2>Produits trouvés pour '{{ search }}'</h2> {% endif %}
         {% else %}
             Échantillons de produits :
         {% endif %}
-
-        <ol>
+        <div id="productsList">
             {% for product in products %}
-                <li><img id="productImage" src="{{ product.picturesUrls }}" alt="{{ product.productName }}"/> -- {{ product.productName }} -- PRIX : {{ product.price }} € </li>
+                <a id="productItem" href="{{ path('app_product_show', {'id' : product.id}) }}"><img id="productImage" src="{{ product.picturesUrls }}" alt="{{ product.productName }}"/><div id="productTitle">{{ product.productName }} -- PRIX : {{ product.price }} € </div></a>
             {% endfor %}
-        </ol>
+        </div>
     {% endif %}
+
 </div>
 {% endblock %}

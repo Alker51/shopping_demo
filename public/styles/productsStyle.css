@@ -1,7 +1,36 @@
-#productImage {
-    width: 50%;
+div#productsList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style-type: none;
+    justify-content: space-evenly;
 }
 
-html {
-    background: aquamarine;
+a#productItem {
+    height: auto;
+    width: auto;
+    background-color:red;
+    margin: 1%;
+
+}
+
+div#productTitle {
+    text-align: center;
+}
+
+img#productImage {
+    width: 75%;
+    height: auto;
+    padding: 2%;
+}
+
+div#productTitle {
+    color: white;
+    font-weight: bold;
+    text-underline-mode: none;
+}
+
+a {
+    text-decoration: none;
+    text-align: center;
 }
