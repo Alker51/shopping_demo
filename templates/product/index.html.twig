@@ -10,8 +10,14 @@
 <div class="productList">
     <h1>Page Products</h1>
 
+
+
     {% if products is not empty %}
-        Voici une liste de produits en exemple :
+        {% if search is not empty %}
+            {% if products|length > 1 %} <h2>Produit trouvé pour '{{ search }}'</h2> {% else %} <h2>Produits trouvés pour '{{ search }}'</h2> {% endif %}
+        {% else %}
+            Échantillons de produits :
+        {% endif %}
 
         <ol>
             {% for product in products %}

@@ -48,13 +48,12 @@ class ProductRepository extends ServiceEntityRepository
 
         if(!empty($value)) {
             if(is_string($value)) {
-                $qb->andWhere('p.productName = :val')
-                    ->orWhere('p.description = :val');
+                $qb->andWhere($qb->expr()->like('p.productName', ':val'));
             } elseif(is_int($value)) {
                 $qb->andWhere('p.id = :val');
             }
 
-            $qb->setParameter('val', $value);
+            $qb->setParameter('val', "%$value%");
         }
 
         $qb ->orderBy('p.id', 'ASC');

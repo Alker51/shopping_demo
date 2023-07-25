@@ -14,11 +14,12 @@ class ProductController extends AbstractController
     #[Route('/product', name: 'app_product')]
     public function index(ProductRepository $productRepository, Request $request): Response
     {
-        $search = $request->get('search', '');
+        $search = $request->query->get('search', '');
         $products = $productRepository->search($search);
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
+            'search' => $search
         ]);
     }
 
