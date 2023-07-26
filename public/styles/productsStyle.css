@@ -11,10 +11,8 @@ a#productItem {
     width: auto;
     background-color:red;
     margin: 1%;
-
-}
-
-div#productTitle {
+    border-radius: 20%;
+    text-decoration: none;
     text-align: center;
 }
 
@@ -25,12 +23,8 @@ img#productImage {
 }
 
 div#productTitle {
+    text-align: center;
     color: white;
     font-weight: bold;
     text-underline-mode: none;
-}
-
-a {
-    text-decoration: none;
-    text-align: center;
 }
