@@ -4,11 +4,24 @@
     <link href="{{ asset('styles/productsStyle.css') }}" rel="stylesheet">
 {% endblock %}
 
-{% block body %}
-
+{% block title %}
+    Fiche {{ product.productName }}
 {% endblock %}
 
-{% block title %}
-
+{% block body %}
+    <div id="info">
+        <h1>{{ product.productName }}</h1>
+        <img src="{{ product.picturesUrls }}" alt="Picture of {{ product.productName }}">
+        <p>{{ product.description }}</p>
+        <p>Prix : {{ product.price }} &euro;</p>
+    </div>
+    <div id="zonePanier">
+        <form>
+            <label>Quantité :
+                <input class="form-control me-2" type="number" min="1" placeholder="1">
+            </label>
+            <button class="btn btn-outline-success" type="submit">Ajouter au panier</button>
+        </form>
+    </div>
 {% endblock %}
 
