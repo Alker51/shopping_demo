@@ -9,9 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/product')]
 class ProductController extends AbstractController
 {
-    #[Route('/product', name: 'app_product')]
+    #[Route('/', name: 'app_product')]
     public function index(ProductRepository $productRepository, Request $request): Response
     {
         $search = $request->query->get('search', '');
@@ -23,7 +24,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/product/{id}', name: 'app_product_show', requirements: ['id' => '\d+'])]
+    #[Route('/{id}', name: 'app_product_show', requirements: ['id' => '\d+'])]
     public function show(Product $product = null): Response
     {
         if(is_null($product)){
