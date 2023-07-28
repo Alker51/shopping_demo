@@ -9,6 +9,7 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>✅ {{ title }} ✅</h1>
+    <h1>Bienvenue sur {{ title }} {% if is_granted('IS_AUTHENTICATED_FULLY') %}{{ app.user.username }}{% else %}invité(e){% endif %}</h1>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}{% if app.user.verified == false %}<h2>VOTRE COMPTE N'EST PAS VERIFIE. VEUILLEZ LE VERIFIE OU IL SERA SUPPRIME !</h2>{% endif %}{% endif %}
 </div>
 {% endblock %}

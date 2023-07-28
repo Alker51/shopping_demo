@@ -41,13 +41,21 @@
                         <a class="nav-link disabled">Disabled</a>
                     </li>
                 </ul>
-
-                <form action="{{ path('app_login') }}">
-                    <button class="btn btn-outline-danger" type="submit">Connexion</button>
-                </form>
-                <form action="{{ path('app_register') }}">
-                    <button class="btn btn-outline-danger btn-account" type="submit">Inscription</button>
-                </form>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <form action="{{ path('app_logout') }}">
+                        <button class="btn btn-outline-danger" type="submit">Deconnexion</button>
+                    </form>
+                    <form action="{{ path('app_user_show', {'id' : app.user.id}) }}">
+                        <button class="btn btn-outline-success btn-account" type="submit">Mon Compte</button>
+                    </form>
+                {% else %}
+                    <form action="{{ path('app_login') }}">
+                        <button class="btn btn-outline-danger" type="submit">Connexion</button>
+                    </form>
+                    <form action="{{ path('app_register') }}">
+                        <button class="btn btn-outline-danger btn-account" type="submit">Inscription</button>
+                    </form>
+                {% endif %}
             </div>
         </div>
     </nav>
