@@ -2,16 +2,20 @@
 
 {% block title %}User index{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('styles/usersStyle.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
     <h1>User index</h1>
 
-    <table class="table">
+    <table class="table table-responsive">
         <thead>
             <tr>
+                <th>Verified</th>
                 <th>Id</th>
                 <th>Username</th>
                 <th>Roles</th>
-                <th>Password</th>
                 <th>Email</th>
                 <th>FirstName</th>
                 <th>LastName</th>
@@ -22,15 +26,16 @@
                 <th>PhoneNumber</th>
                 <th>AvatarUrl</th>
                 <th>actions</th>
+
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
+                <td>{% if user.verified == true %}<span class="badge text-bg-success">YES</span>{% else %}<span class="badge text-bg-danger">Warning</span>{% endif %}</td>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
@@ -39,10 +44,10 @@
                 <td>{{ user.postalCode }}</td>
                 <td>{{ user.city }}</td>
                 <td>{{ user.phoneNumber }}</td>
-                <td>{{ user.avatarUrl }}</td>
+                <td><img id="avatarTable" src="{{ user.avatarUrl }}" alt="avatar"></td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
                 </td>
             </tr>
         {% else %}
