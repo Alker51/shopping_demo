@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Listes des comptes{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('scripts/usersScript.js') }}"></script>
+{% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('styles/usersStyle.css') }}" rel="stylesheet">
@@ -48,6 +52,8 @@
                 <td>
                     <a href="{{ path('app_user_show', {'id': user.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
                     <a href="{{ path('app_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
+                    <br><br>
+                    <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
                 </td>
             </tr>
         {% else %}
