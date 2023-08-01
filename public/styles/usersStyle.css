@@ -2,6 +2,18 @@ table {
     width: 100%;
 }
 
+h1#MainTitle {
+    text-align: center;
+}
+
 #avatarTable {
     height: 100px;
+}
+
+tr[id*="userVerified"] {
+    background-color : #BAFFBD;
+}
+
+tr[id*="userNotVerified"] {
+    background-color: #FF9AA2;
 }

@@ -7,12 +7,12 @@
 {% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <h1 id="MainTitle">Liste des comptes</h1>
 
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Verified</th>
+                <th>Verified ?</th>
                 <th>Id</th>
                 <th>Username</th>
                 <th>Roles</th>
@@ -24,15 +24,15 @@
                 <th>PostalCode</th>
                 <th>City</th>
                 <th>PhoneNumber</th>
-                <th>AvatarUrl</th>
+                <th>Avatar</th>
                 <th>actions</th>
 
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
-            <tr>
-                <td>{% if user.verified == true %}<span class="badge text-bg-success">YES</span>{% else %}<span class="badge text-bg-danger">Warning</span>{% endif %}</td>
+            <tr id="user {% if user.verified == true %}userVerified{% else %}userNotVerified{% endif %}">
+                <td>{% if user.verified == true %}<span class="badge text-bg-success">YES</span>{% else %}<span class="badge text-bg-danger">NO</span>{% endif %}</td>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
