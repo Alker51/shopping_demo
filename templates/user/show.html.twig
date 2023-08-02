@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Information de compte : {{ user.username }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('styles/usersStyle.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1 id="MainTitle">Information de compte : {{ user.username }}</h1>
 
     <table class="table">
         <tbody>
@@ -17,11 +21,15 @@
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{% if 'ROLE_ADMIN' in user.roles %}ADMIN{% else %}USER{% endif %}</td>
             </tr>
             <tr>
                 <th>Password</th>
-                <td>{{ user.password }}</td>
+                <td>
+                    <a href="#" onclick="showAlert('Send mail pass');"><button type="button" class="btn btn-info btn-sm">Envoi mail pour changement de mot de passe</button></a>
+                    <br>
+                    <a href="#" onclick="showAlert('Change Pass');"><button type="button" class="btn btn-danger btn-sm">Changer le mot de passe</button></a>
+                </td>
             </tr>
             <tr>
                 <th>Email</th>
@@ -57,14 +65,16 @@
             </tr>
             <tr>
                 <th>AvatarUrl</th>
-                <td>{{ user.avatarUrl }}</td>
+                <td><img id="avatarTable" src="{{ user.avatarUrl }}" alt="avatar"><a href="#" onclick="showAlert('Suppr avatar');"><button type="button" class="btn btn-danger btn-sm">Supprimer l'avatar</button></a></td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <a href="{{ path('app_user_index') }}"><button type="button" class="btn btn-primary btn-sm">Back to the list</button></a>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-info btn-sm">Edit</button></a>
+
+    <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
