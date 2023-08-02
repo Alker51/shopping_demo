@@ -11,9 +11,9 @@ h1#MainTitle {
 }
 
 tr[id*="userVerified"] {
-    background-color : #BAFFBD;
+
 }
 
 tr[id*="userNotVerified"] {
-    background-color: #FF9AA2;
+
 }
