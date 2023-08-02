@@ -39,7 +39,7 @@
                 <td>{% if user.verified == true %}<span class="badge text-bg-success">YES</span>{% else %}<span class="badge text-bg-danger">NO</span>{% endif %}</td>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{% if 'ROLE_ADMIN' in user.roles %}ADMIN{% else %}USER{% endif %}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.firstName }}</td>
                 <td>{{ user.lastName }}</td>
@@ -53,7 +53,12 @@
                     <a href="{{ path('app_user_show', {'id': user.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
                     <a href="{{ path('app_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
                     <br><br>
-                    <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <a href="#" onclick="showAlert('Revoke Admin');"><button type="button" class="btn btn-danger btn-sm">Révoquer Admin</button></a>
+                    {% else %}
+                        <a href="#" onclick="showAlert('Pass Admin');"><button type="button" class="btn btn-danger btn-sm">Passer Admin</button></a>
+                        <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
