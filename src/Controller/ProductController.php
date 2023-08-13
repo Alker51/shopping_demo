@@ -34,4 +34,22 @@ class ProductController extends AbstractController
             'product' => $product,
         ]);
     }
+
+    #[Route('/{id}/edit', name: 'app_product_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
+    {
+        $form = $this->createForm(Product::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productRepository->save($product, true);
+
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/edit.html.twig', [
+            'product' => $product,
+            'form' => $form, #TODO : Créer le type pour le formulaire car le productType n'existe pas.
+        ]);
+    }
 }
