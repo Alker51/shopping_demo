@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,18 +40,29 @@ class ProductController extends AbstractController
     #[Route('/{id}/edit', name: 'app_product_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
-        $form = $this->createForm(Product::class, $product);
+        $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productRepository->save($product, true);
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user/edit.html.twig', [
+        return $this->renderForm('product/edit.html.twig', [
             'product' => $product,
-            'form' => $form, #TODO : Créer le type pour le formulaire car le productType n'existe pas.
+            'form' => $form,
         ]);
+    }
+
+    #[Route('/delete/{id}', name: 'app_product_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to delete products.')]
+    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+            $productRepository->remove($product, true);
+        }
+
+        return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
     }
 }
