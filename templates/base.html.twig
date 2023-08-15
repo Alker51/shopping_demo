@@ -51,7 +51,7 @@
                         <button class="btn btn-outline-danger" type="submit">Deconnexion</button>
                     </form>
                     <form action="{{ path('app_user_show', {'id' : app.user.id}) }}">
-                        <button class="btn btn-outline-success btn-account" type="submit">Compte</button>
+                        <button class="btn btn-outline-success btn-account" type="submit">{{ app.user.username }}</button>
                     </form>
                 {% else %}
                     <form action="{{ path('app_login') }}">
