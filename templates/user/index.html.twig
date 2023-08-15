@@ -16,7 +16,7 @@
     <table class="table table-responsive">
         <thead>
             <tr>
-                <th>Verified ?</th>
+                <th>Status</th>
                 <th>Id</th>
                 <th>Username</th>
                 <th>Roles</th>
@@ -36,7 +36,10 @@
         <tbody>
         {% for user in users %}
             <tr id="user {% if user.verified == true %}userVerified{% else %}userNotVerified{% endif %}">
-                <td>{% if user.verified == true %}<span class="badge text-bg-success">YES</span>{% else %}<span class="badge text-bg-danger">NO</span>{% endif %}</td>
+                <td>
+                    {% if user.verified == true %}<span class="badge text-bg-success">Verified</span>{% else %}<span class="badge text-bg-danger">Not verified</span>{% endif %}
+                    {% if 'ROLE_ADMIN' in user.roles %}<br><span class="badge text-bg-primary">ADMIN</span>{% endif %}
+                </td>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{% if 'ROLE_ADMIN' in user.roles %}ADMIN{% else %}USER{% endif %}</td>
