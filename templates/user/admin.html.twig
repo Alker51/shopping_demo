@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listes des produits - Admin{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('scripts/usersScript.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('styles/usersStyle.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <h1 id="MainTitle">Liste des produits</h1>
+
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Picture</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.price }}</td>
+                <td><img id="avatarTable" src="{{ product.products_urls }}" alt="avatar"></td>
+                <td>{{ product.description }}</td>
+                <td>
+                    <a href="{{ path('app_product_edit', {'id': product.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
+                    <a href="{{ path('app_product_edit', {'id': product.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
+                    <br><br>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <a href="#" onclick="showAlert('Revoke Admin');"><button type="button" class="btn btn-danger btn-sm">Révoquer Admin</button></a>
+                    {% else %}
+                        <a href="#" onclick="showAlert('Pass Admin');"><button type="button" class="btn btn-danger btn-sm">Passer Admin</button></a>
+                        <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_new') }}">Create new</a>
+{% endblock %}

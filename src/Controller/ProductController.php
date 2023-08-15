@@ -20,7 +20,12 @@ class ProductController extends AbstractController
         $search = $request->query->get('search', '');
         $products = $productRepository->search($search);
 
-        return $this->render('product/index.html.twig', [
+        $view = 'product/index.html.twig';
+
+        if(in_array($this->getUser()->getRoles(), 'ROLE_ADMIN'))
+           $view = 'product/admin.html.twig';
+
+        return $this->render($view, [
             'products' => $products,
             'search' => $search
         ]);
