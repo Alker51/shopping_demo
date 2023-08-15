@@ -22,28 +22,27 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Pages
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ path('app_product') }}">Products</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form class="d-flex" role="search">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://localhost/phpmyadmin" target="_blank">PHP My Admin</a>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="BannerAlert" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ path('app_user_index') }}">Users Manager</a></li>
+                                <li><a class="dropdown-item" href="{{ path('app_product') }}">Product Manager</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="http://localhost/phpmyadmin" target="_blank">PHP My Admin</a>
+                                </li>
+                            </ul>
+                        </li>
                     {% endif %}
+
                 </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <form action="{{ path('app_logout') }}">
                         <button class="btn btn-outline-danger" type="submit">Deconnexion</button>
