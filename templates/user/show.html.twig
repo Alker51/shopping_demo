@@ -7,27 +7,32 @@
 {% endblock %}
 
 {% block body %}
-    <h1 id="MainTitle">Information de compte : {{ user.username }}</h1>
+    <div>
+    <h1 id="MainTitle">Information de compte : {{ user.username }}  <span class="badge bg-info rounded-pill" title="ID de votre compte">{{ user.id }}</span></h1></div>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
             <tr>
                 <th>Username</th>
                 <td>{{ user.username }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{% if 'ROLE_ADMIN' in user.roles %}ADMIN{% else %}USER{% endif %}</td>
+                <td>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <span class="badge text-bg-danger">ADMIN</span>
+                    {% else %}
+                        <span class="badge text-bg-primary">USER</span>
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Password</th>
                 <td>
-                    <a href="#" onclick="showAlert('Send mail pass');"><button type="button" class="btn btn-info btn-sm">Envoi mail pour changement de mot de passe</button></a>
-                    <br>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <a href="#" onclick="showAlert('Send mail pass');"><button type="button" class="btn btn-info btn-sm">Envoi mail pour changement de mot de passe</button></a>
+                        <br>
+                    {% endif %}
                     <a href="#" onclick="showAlert('Change Pass');"><button type="button" class="btn btn-danger btn-sm">Changer le mot de passe</button></a>
                 </td>
             </tr>
@@ -36,28 +41,28 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>FirstName</th>
-                <td>{{ user.firstName }}</td>
+                <th>
+                    FirstName
+                    <br>
+                    LastName
+                </th>
+                <td>
+                    {{ user.firstName }}
+                    <br>
+                    {{ user.lastName }}
+                </td>
             </tr>
             <tr>
-                <th>LastName</th>
-                <td>{{ user.lastName }}</td>
-            </tr>
-            <tr>
-                <th>AdresseLine1</th>
-                <td>{{ user.AdresseLine1 }}</td>
-            </tr>
-            <tr>
-                <th>AdresseLine2</th>
-                <td>{{ user.AdresseLine2 }}</td>
-            </tr>
-            <tr>
-                <th>PostalCode</th>
-                <td>{{ user.postalCode }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ user.city }}</td>
+                <th>Adresse</th>
+                <td>
+                    Line 1 : {{ user.AdresseLine1 }}
+                    <br>
+                    Line 2 : {{ user.AdresseLine2 }}
+                    <br>
+                    Postal Code : {{ user.postalCode }}
+                    <br>
+                    Town : {{ user.city }}
+                </td>
             </tr>
             <tr>
                 <th>PhoneNumber</th>
