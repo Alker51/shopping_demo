@@ -21,9 +21,12 @@ class ProductController extends AbstractController
         $products = $productRepository->search($search);
 
         $view = 'product/index.html.twig';
-
-        if($this->getUser()->getRoles() == 'ROLE_ADMIN')
-           $view = 'product/admin.html.twig';
+        ;
+        if($this->isGranted('IS_AUTHENTICATED_FULLY', $this->getUser())){
+            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
+                $view = 'product/admin.html.twig';
+            }
+        }
 
         return $this->render($view, [
             'products' => $products,

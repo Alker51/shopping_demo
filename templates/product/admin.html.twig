@@ -28,20 +28,13 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.id }}</td>
-                <td>{{ product.product_name }}</td>
-                <td>{{ product.price }}</td>
-                <td><img id="avatarTable" src="{{ product.products_urls }}" alt="avatar"></td>
+                <td>{{ product.productName }}</td>
+                <td>{{ product.price }} €</td>
+                <td><img id="avatarTable" src="{{ product.picturesUrls }}" alt="avatar"></td>
                 <td>{{ product.description }}</td>
                 <td>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
+                    <a href="{{ path('app_product_show', {'id': product.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
                     <a href="{{ path('app_product_edit', {'id': product.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
-                    <br><br>
-                    {% if 'ROLE_ADMIN' in user.roles %}
-                        <a href="#" onclick="showAlert('Revoke Admin');"><button type="button" class="btn btn-danger btn-sm">Révoquer Admin</button></a>
-                    {% else %}
-                        <a href="#" onclick="showAlert('Pass Admin');"><button type="button" class="btn btn-danger btn-sm">Passer Admin</button></a>
-                        <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
-                    {% endif %}
                 </td>
             </tr>
         {% else %}
