@@ -33,6 +33,24 @@ class ProductController extends AbstractController
             'search' => $search
         ]);
     }
+    #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ProductRepository $productRepository)
+    {
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $productRepository->save($product, true);
+
+            return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/new.html.twig', [
+            'product' => $product,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_product_show', requirements: ['id' => '\d+'])]
     public function show(Product $product = null): Response
