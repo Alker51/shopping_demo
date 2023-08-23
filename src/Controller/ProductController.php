@@ -22,7 +22,7 @@ class ProductController extends AbstractController
 
         $view = 'product/index.html.twig';
 
-        if(in_array($this->getUser()->getRoles(), 'ROLE_ADMIN'))
+        if($this->getUser()->getRoles() == 'ROLE_ADMIN')
            $view = 'product/admin.html.twig';
 
         return $this->render($view, [
