@@ -50,12 +50,17 @@ final class ProductFactory extends ModelFactory
         $desc = $faker->realText(255);
         $price = $faker->randomFloat(2);
         $picture = 'https://ui-avatars.com/api/?background=random&rounded=true&size=512&name='. $name;
+        $stock = $faker->numberBetween(0, 25);
+        $display = $faker->boolean();
 
         return [
             'description' => $desc,
             'picturesUrls' => $picture,
             'price' => $price,
-            'productName' => $name
+            'productName' => $name,
+            'stock' => $stock,
+            'display' => $display,
+            'discount' => null
         ];
     }
 

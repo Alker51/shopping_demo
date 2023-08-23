@@ -21,6 +21,9 @@
             <th>Price</th>
             <th>Picture</th>
             <th>Description</th>
+            <th>Discount</th>
+            <th>Stock</th>
+            <th>Display</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -33,8 +36,36 @@
                 <td><img id="avatarTable" src="{{ product.picturesUrls }}" alt="avatar"></td>
                 <td>{{ product.description }}</td>
                 <td>
+                    {% if product.discount is null %}
+                        <span class="badge text-bg-primary">No Discount</span>
+                    {% else %}
+                        <span class="badge text-bg-primary">- {{ product.discount }} %</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if product.stock == 0 %}
+                        <span class="badge text-bg-danger">No Stock</span>
+                    {% elseif product.stock == 1 %}
+                        <span class="badge text-bg-warning">Only {{ product.stock }} left</span>
+                    {% else %}
+                        <span class="badge text-bg-success">{{ product.stock }} left</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if product.display == true %}
+                        <span class="badge text-bg-success">Displayed</span>
+                    {% else %}
+                        <span class="badge text-bg-danger">Not Displayed</span>
+                    {% endif %}
+                </td>
+                <td>
                     <a href="{{ path('app_product_show', {'id': product.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
                     <a href="{{ path('app_product_edit', {'id': product.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
+                    {% if product.display == true %}
+                        <a href="#" onclick="alert('Méthode pas encore crée')"><button type="button" class="btn btn-danger btn-sm">Hide on site</button></a>
+                    {% else %}
+                        <a href="#" onclick="alert('Méthode pas encore crée')"><button type="button" class="btn btn-danger btn-sm">Show on site</button></a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
