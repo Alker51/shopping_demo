@@ -9,19 +9,23 @@
 {% endblock %}
 
 {% block body %}
-    <div id="info">
-        <h1>{{ product.productName }}</h1>
-        <img src="{{ product.picturesUrls }}" alt="Picture of {{ product.productName }}">
-        <p>{{ product.description }}</p>
-        <p>Prix : {{ product.price }} &euro;</p>
-    </div>
-    <div id="zonePanier">
-        <form>
-            <label>Quantité :
-                <input class="form-control me-2" type="number" min="1" placeholder="1">
-            </label>
-            <button class="btn btn-outline-success" type="submit">Ajouter au panier</button>
-        </form>
+    <h1 id="productName">{{ product.productName }}</h1>
+    <div id="bodyProduct">
+        <div id="gallery">
+            <img src="{{ product.picturesUrls }}" alt="Picture of {{ product.productName }}">
+        </div>
+        <div id="info">
+            <p>{{ product.description }}</p>
+            <p>Prix : {{ product.price }} &euro;</p>
+            <div id="zonePanier">
+                <form>
+                    <label>Quantité :
+                        <input class="form-control me-2" type="number" min="1" placeholder="1">
+                    </label>
+                    <button class="btn btn-outline-success" type="submit">Ajouter au panier</button>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

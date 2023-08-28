@@ -28,3 +28,22 @@ div#productTitle {
     font-weight: bold;
     text-underline-mode: none;
 }
+
+h1#productName {
+    text-align: center;
+    font-weight: bold;
+}
+
+div#bodyProduct {
+    display: flex;
+    flex-direction: row;
+}
+
+div#info {
+    display: flex;
+    flex-direction: column;
+}
+
+div#bodyProduct > * {
+
+}
