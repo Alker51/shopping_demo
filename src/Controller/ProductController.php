@@ -21,13 +21,6 @@ class ProductController extends AbstractController
         $products = $productRepository->search($search);
 
         $view = 'product/index.html.twig';
-        ;
-        if($this->isGranted('IS_AUTHENTICATED_FULLY', $this->getUser())){
-            if (in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
-                $view = 'product/admin.html.twig';
-            }
-        }
-
         return $this->render($view, [
             'products' => $products,
             'search' => $search
@@ -90,5 +83,19 @@ class ProductController extends AbstractController
         }
 
         return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/manage', name: 'app_product_manage', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to manage products.')]
+    public function manage(ProductRepository $productRepository, Request $request)
+    {
+        $search = $request->query->get('search', '');
+        $products = $productRepository->search($search);
+
+        $view = 'product/admin.html.twig';
+        return $this->render($view, [
+            'products' => $products,
+            'search' => $search
+        ]);
     }
 }
