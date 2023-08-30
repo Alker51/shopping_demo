@@ -34,6 +34,9 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?int $discount = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $discountedPrice = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +122,18 @@ class Product
     public function setDiscount(?int $discount): static
     {
         $this->discount = $discount;
+
+        return $this;
+    }
+
+    public function getDiscountedPrice(): ?float
+    {
+        return $this->discountedPrice;
+    }
+
+    public function setDiscountedPrice(?float $discountedPrice): static
+    {
+        $this->discountedPrice = $discountedPrice;
 
         return $this;
     }

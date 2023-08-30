@@ -25,7 +25,7 @@ class ProductType extends AbstractType
             ->add('display', CheckboxType::class, ['required' => false,])
             ->add('stock', NumberType::class)
             ->add('discount', IntegerType::class, ['required' => false,])
-        ;
+            ->add('discountedPrice', NumberType::class, ['required' => false,]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

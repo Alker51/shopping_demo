@@ -20,6 +20,8 @@ class ProductController extends AbstractController
         $search = $request->query->get('search', '');
         $products = $productRepository->search($search);
 
+        $products = $this->calculatedDiscountPriceArray($products);
+
         $view = 'product/index.html.twig';
         return $this->render($view, [
             'products' => $products,
