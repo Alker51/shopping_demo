@@ -20,7 +20,8 @@ class ProductController extends AbstractController
         $search = $request->query->get('search', '');
         $products = $productRepository->search($search);
 
-        $products = $this->calculatedDiscountPriceArray($products);
+        foreach ($products as $key => $product)
+            $products[$key] = $this->calculatedDiscountPrice($product, $productRepository);
 
         $view = 'product/index.html.twig';
         return $this->render($view, [
@@ -36,6 +37,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
+            $product = $this->calculatedDiscountPrice($product, $productRepository);
             $productRepository->save($product, true);
 
             return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
@@ -48,11 +50,14 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_product_show', requirements: ['id' => '\d+'])]
-    public function show(Product $product = null): Response
+    public function show(Product $product = null, ProductRepository $productRepository): Response
     {
         if(is_null($product)){
             throw $this->createNotFoundException('404 Le produit n\'existe pas.');
         }
+
+        $product = $this->calculatedDiscountPrice($product, $productRepository);
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
@@ -65,6 +70,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $product = $this->calculatedDiscountPrice($product, $productRepository);
             $productRepository->save($product, true);
 
             return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
@@ -94,10 +100,29 @@ class ProductController extends AbstractController
         $search = $request->query->get('search', '');
         $products = $productRepository->search($search);
 
+        foreach ($products as $key => $product)
+            $products[$key] = $this->calculatedDiscountPrice($product, $productRepository);
+
         $view = 'product/admin.html.twig';
         return $this->render($view, [
             'products' => $products,
             'search' => $search
         ]);
+    }
+
+    private function calculatedDiscountPrice(Product $product, ProductRepository $productRepository) : Product
+    {
+            if(!is_null($product->getDiscount()) && !is_null($product->getPrice())) {
+                $discountedPriceNew = round($product->getPrice() * ($product->getDiscount() / 100), 2);
+                $discountedPriceOld = $product->getDiscountedPrice();
+                
+                if($discountedPriceOld !== $discountedPriceNew){
+                    $product->setDiscountedPrice(round($product->getPrice() * ($product->getDiscount() / 100), 2));
+
+                    $productRepository->save($product, true);
+                }
+            }
+
+        return $product;
     }
 }
