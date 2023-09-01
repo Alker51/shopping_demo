@@ -22,6 +22,11 @@ img#productImage {
     padding: 2%;
 }
 
+p#oldPrice {
+    text-decoration: line-through;
+    color: darkgray;
+}
+
 div#productTitle {
     text-align: center;
     color: white;

@@ -16,7 +16,9 @@
         </div>
         <div id="info">
             <p>{{ product.description }}</p>
-            <p>Prix : {{ product.price }} &euro;</p>
+            {% if product.discountedPrice is not null %}<span class="badge text-bg-warning">PROMO : - {{ product.discount }} %</span>{% endif %}
+            <p>Prix : {% if product.discountedPrice is null %}{{ product.price }}{% else %}{{ product.discountedPrice }}{% endif%} &euro;</p>
+            {% if product.discountedPrice is not null %}<p id="oldPrice">Ancien Prix : {{ product.price }} &euro;</p>{% endif %}
             <div id="zonePanier">
                 <form>
                     <label>Quantité :

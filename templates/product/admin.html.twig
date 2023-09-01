@@ -22,6 +22,7 @@
             <th>Picture</th>
             <th>Description</th>
             <th>Discount</th>
+            <th>Discounted Price</th>
             <th>Stock</th>
             <th>Display</th>
             <th>Action</th>
@@ -42,6 +43,7 @@
                         <span class="badge text-bg-primary">- {{ product.discount }} %</span>
                     {% endif %}
                 </td>
+                <td>{{ product.discountedPrice }}</td>
                 <td>
                     {% if product.stock == 0 %}
                         <span class="badge text-bg-danger">No Stock</span>
