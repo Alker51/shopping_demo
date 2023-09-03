@@ -30,6 +30,7 @@ class ProductController extends AbstractController
         ]);
     }
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to create products.')]
     public function new(Request $request, ProductRepository $productRepository)
     {
         $product = new Product();
@@ -40,7 +41,7 @@ class ProductController extends AbstractController
             $product = $this->calculatedDiscountPrice($product, $productRepository);
             $productRepository->save($product, true);
 
-            return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product_manage', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/new.html.twig', [
@@ -64,6 +65,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to edit products.')]
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
         $form = $this->createForm(ProductType::class, $product);
@@ -73,7 +75,7 @@ class ProductController extends AbstractController
             $product = $this->calculatedDiscountPrice($product, $productRepository);
             $productRepository->save($product, true);
 
-            return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product_manage', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('product/edit.html.twig', [
@@ -90,7 +92,7 @@ class ProductController extends AbstractController
             $productRepository->remove($product, true);
         }
 
-        return $this->redirectToRoute('app_product', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_product_manage', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/manage', name: 'app_product_manage', methods: ['GET', 'POST'])]

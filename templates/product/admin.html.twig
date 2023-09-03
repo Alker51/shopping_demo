@@ -33,7 +33,7 @@
             <tr>
                 <td>{{ product.id }}</td>
                 <td>{{ product.productName }}</td>
-                <td>{{ product.price }} €</td>
+                <td>{{ product.price }} &euro;</td>
                 <td><img id="avatarTable" src="{{ product.picturesUrls }}" alt="avatar"></td>
                 <td>{{ product.description }}</td>
                 <td>
@@ -43,7 +43,7 @@
                         <span class="badge text-bg-primary">- {{ product.discount }} %</span>
                     {% endif %}
                 </td>
-                <td>{{ product.discountedPrice }}</td>
+                <td>{% if product.discountedPrice is not null %}{{ product.discountedPrice }} &euro;{% endif %}</td>
                 <td>
                     {% if product.stock == 0 %}
                         <span class="badge text-bg-danger">No Stock</span>
@@ -63,11 +63,12 @@
                 <td>
                     <a href="{{ path('app_product_show', {'id': product.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
                     <a href="{{ path('app_product_edit', {'id': product.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
-                    {% if product.display == true %}
-                        <a href="#" onclick="alert('Méthode pas encore crée')"><button type="button" class="btn btn-danger btn-sm">Hide on site</button></a>
-                    {% else %}
-                        <a href="#" onclick="alert('Méthode pas encore crée')"><button type="button" class="btn btn-danger btn-sm">Show on site</button></a>
-                    {% endif %}
+
+                        <a href="#" {% if product.display == true %}onclick="alert('Méthode pas encore crée')"{% else %}onclick="alert('Méthode pas encore crée')"{% endif %}>
+                            <button type="button" class="btn btn-{% if product.display == true %}danger{% else %}success{% endif %} btn-sm">
+                                {% if product.display == true %}Hide{% else %}Show{% endif %} on site
+                            </button>
+                        </a>
                 </td>
             </tr>
         {% else %}
