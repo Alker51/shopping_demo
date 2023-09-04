@@ -2,6 +2,10 @@
 
 {% block title %}Hello CartController!{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('styles/cartStyle.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
@@ -11,12 +15,31 @@
 <div class="example-wrapper">
     <h1>Panier</h1>
 
-    {% if panier is not empty %}
-    <ul>
-    {% for idProduct, qtyProduct in panier %}
-        <li>{{ idProduct }} --> {{ qtyProduct }}</li>
+    {% if cart is not empty %}
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th></th>
+            <th>Sous-Total</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for idProduct, productInfo in cart %}
+            <tr>
+                <td id="tdImage"><img id="productImage" src="{{ productInfo.pics }}" alt="{{ productInfo.name }}"/></td>
+                <td>{{ productInfo.name }}</td>
+                <td>{{ productInfo.qty }}</td>
+                <td><a href="#"><button type="button" class="btn btn-danger btn-sm">Supprimer du panier</button></a></td>
+                <td>{{ productInfo.total }} &euro;</td>
+            </tr>
     {% endfor %}
-    </ul>
+        </tbody>
+    </table>
+
+        <div>TOTAL Panier : {{ total }} &euro;</div>
     {% else %}
     <h2>Panier vide</h2>
     {% endif %}
