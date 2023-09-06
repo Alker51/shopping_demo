@@ -16,26 +16,28 @@
     <h1>Panier</h1>
 
     {% if cart is not empty %}
-    <div class="Cart">
-        <div id="cartHeader">
-            <p>Produit</p>
-            <p></p>
-            <p>Quantité</p>
-            <p></p>
-            <p>Sous-Total</p>
-        </div>
-        <div id="cartDetail">
+    <table class="Cart table table-responsive">
+        <thead id="cartHeader">
+            <th></th>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th></th>
+            <th>Sous-Total</th>
+        </thead>
+        <tbody id="cartDetail">
     {% for idProduct, productInfo in cart %}
-            <div id="cartProduct">
-                <div id="productInfo">{{ productInfo.name }}</div>
-                <div id="productInfo"><img id="productImage" src="{{ productInfo.pics }}" alt="{{ productInfo.name }}"/></div>
-                <div id="productInfo">{{ productInfo.qty }}</div>
-                <div id="productInfo"><a href="#"><button type="button" class="btn btn-danger btn-sm">Supprimer du panier</button></a></div>
-                <div id="productInfo">{{ productInfo.total }} &euro;</div>
-            </div>
+            <tr id="cartProduct">
+                <td id="gallery">
+                    <img id="productImage" src="{{ productInfo.pics }}" alt="{{ productInfo.name }}"/>
+                </td>
+                <td id="productInfo">{{ productInfo.name }}</td>
+                <td id="productInfo">{{ productInfo.qty }}</td>
+                <td id="productInfo"><a href="#"><button type="button" class="btn btn-danger btn-sm">Supprimer du panier</button></a></td>
+                <td id="productInfo">{{ productInfo.total }} &euro;</td>
+            </tr>
     {% endfor %}
-        </div>
-    </div>
+        </tbody>
+    </table>
 
         <div>TOTAL Panier : {{ total }} &euro;</div>
     {% else %}
