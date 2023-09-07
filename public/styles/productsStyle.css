@@ -8,7 +8,7 @@ div#productsList {
 
 a#productItem {
     height: auto;
-    width: auto;
+    width: 200px;
     background-color:red;
     margin: 1%;
     border-radius: 20%;
@@ -17,8 +17,7 @@ a#productItem {
 }
 
 img#productImage {
-    width: 75%;
-    height: auto;
+    max-width: 100%;
     padding: 2%;
 }
 
@@ -29,7 +28,7 @@ p#oldPrice {
 
 div#productTitle {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: bold;
     text-underline-mode: none;
 }
@@ -49,6 +48,10 @@ div#info {
     flex-direction: column;
 }
 
-div#bodyProduct > * {
+div#gallery {
+    width: 512px;
+}
 
+div#gallery > * {
+    max-width: 100%;
 }
