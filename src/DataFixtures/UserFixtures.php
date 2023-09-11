@@ -27,6 +27,7 @@ class UserFixtures extends Fixture
         $password = $this->hasher->hashPassword($user, 'admin51');
         $user->setPassword($password);
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setIsVerified(true);
 
         $manager->persist($user);
         $manager->flush();
