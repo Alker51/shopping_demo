@@ -47,19 +47,30 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <form action="{{ path('app_logout') }}">
+                    <a href="{{ path('app_logout') }}">
                         <button class="btn btn-outline-danger" type="submit">Deconnexion</button>
-                    </form>
-                    <form action="{{ path('app_user_show', {'id' : app.user.id}) }}">
-                        <button class="btn btn-outline-success btn-account" type="submit">{{ app.user.username }}</button>
-                    </form>
+                    </a>
+                    <a href="{{ path('app_user_show', {'id' : app.user.id}) }}">
+                        <button class="btn btn-outline-success btn-account" id='account' type="submit">
+                            <svg id="accountSvg" viewBox="0 0 96 96" fill="none">
+                                <path d="M69.3677,51.0059a30,30,0,1,0-42.7354,0A41.9971,41.9971,0,0,0,0,90a5.9966,5.9966,0,0,0,6,6H90a5.9966,5.9966,0,0,0,6-6A41.9971,41.9971,0,0,0,69.3677,51.0059ZM48,12A18,18,0,1,1,30,30,18.02,18.02,0,0,1,48,12ZM12.5977,84A30.0624,30.0624,0,0,1,42,60H54A30.0624,30.0624,0,0,1,83.4023,84Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </a>
+                    <a href="{{ path('app_user_show', {'id' : app.user.id}) }}">
+                        <button class="btn btn-outline-success btn-cart" id='cart' type="submit">
+                            <svg id="cartSvg" viewBox="0 0 24 24" fill="none">
+                                <path d="M7.2998 5H22L20 12H8.37675M21 16H9L7 3H4M4 8H2M5 11H2M6 14H2M10 20C10 20.5523 9.55228 21 9 21C8.44772 21 8 20.5523 8 20C8 19.4477 8.44772 19 9 19C9.55228 19 10 19.4477 10 20ZM21 20C21 20.5523 20.5523 21 20 21C19.4477 21 19 20.5523 19 20C19 19.4477 19.4477 19 20 19C20.5523 19 21 19.4477 21 20Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </a>
                 {% else %}
-                    <form action="{{ path('app_login') }}">
+                    <a href="{{ path('app_login') }}">
                         <button class="btn btn-outline-danger" type="submit">Connexion</button>
-                    </form>
-                    <form action="{{ path('app_register') }}">
+                    </a>
+                    <a href="{{ path('app_register') }}">
                         <button class="btn btn-outline-danger btn-account" type="submit">Inscription</button>
-                    </form>
+                    </a>
                 {% endif %}
             </div>
         </div>
