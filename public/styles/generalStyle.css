@@ -1,5 +1,5 @@
 .btn-account, .btn-cart {
-    margin-left: 2%;
+    margin: 0 0.25rem;
     width: 3rem;
 }
 
@@ -29,4 +29,36 @@
 
 .btn-cart:hover > #cartSvg > path, .btn-account:hover > #accountSvg > path {
     stroke: #ffffff;
+}
+
+.btn-account > #accountSvg {
+    fill: #198754;
+}
+
+.btn-account:hover > #accountSvg {
+    fill: #ffffff;
+}
+
+.btn-account > #logSvg  {
+    fill: #dc3545;
+}
+
+.btn-account:hover > #logSvg {
+    fill: #ffffff;
+}
+
+.btn-account > #logoutSvg > path, .btn-account > #loginSvg > path  {
+    stroke: #dc3545;
+}
+
+.btn-account:hover > #logoutSvg > path, .btn-account:hover > #loginSvg > path {
+    stroke: #ffffff;
+}
+
+.btn-account > #registerSvg {
+    fill: #dc3545;
+}
+
+.btn-account:hover > #registerSvg {
+    fill: #ffffff;
 }
