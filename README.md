@@ -6,7 +6,7 @@ Ce site est un exemple de site e-commerce.
 
 ## Requis
 
-* [PHP 8.2.0 ou supérieur](https://www.php.net/downloads.php#v8.2.8)
+* [PHP 8.3.0 ou supérieur](https://www.php.net/downloads.php)
 * [Symfony 6.2 ou supérieur](https://symfony.com/download)
 
 ## Initialisation du projet
@@ -18,3 +18,10 @@ Ce site est un exemple de site e-commerce.
 4. $ `php bin/console doctrine:database:create`
 5. $ `php bin/console doctrine:schema:create`
 6. $ `php bin/console doctrine:migrations:migrate`
+
+### Idée pour la suite du projet
+
+* API Plateform pour la communication entre Back et Front.
+* React ou autre framework JS pour Front-end.
+
+##### Ce readme doit être amélioré.
