@@ -59,6 +59,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $saveCart = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -245,6 +248,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getSaveCart(): ?string
+    {
+        return $this->saveCart;
+    }
+
+    public function setSaveCart(?string $saveCart): static
+    {
+        $this->saveCart = $saveCart;
 
         return $this;
     }
