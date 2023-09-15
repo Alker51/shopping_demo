@@ -252,13 +252,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getSaveCart(): ?string
+    public function getSaveCart(): ?array
     {
-        return $this->saveCart;
+        $productInCart = json_decode($this->saveCart);
+        return ;
     }
 
-    public function setSaveCart(?string $saveCart): static
+    public function setSaveCart(?array $productInCart): static
     {
+        $saveCart = json_encode($productInCart);
         $this->saveCart = $saveCart;
 
         return $this;
