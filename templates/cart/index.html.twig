@@ -32,7 +32,7 @@
                 </td>
                 <td id="productInfo">{{ productInfo.name }}</td>
                 <td id="productInfo">{{ productInfo.qty }}</td>
-                <td id="productInfo"><a href="#"><button type="button" class="btn btn-danger btn-sm">Supprimer du panier</button></a></td>
+                <td id="productInfo"><a href="{{ path('app_cart_remove' , {'id': idProduct}) }}"><button type="button" class="btn btn-danger btn-sm">Supprimer 1 du panier</button></a></td>
                 <td id="productInfo">{{ productInfo.total }} &euro;</td>
             </tr>
     {% endfor %}

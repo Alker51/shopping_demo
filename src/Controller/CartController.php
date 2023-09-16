@@ -51,13 +51,32 @@ class CartController extends AbstractController
             'total' => $totalCart
         ]);
     }
-#[Route('/add/{id}', name: 'add')]
+    #[Route('/add/{id}', name: 'add')]
     public function add(Product $product, SessionInterface $session, Request $request)
     {
         $id = $product->getId();
         $panier = $session->get('panier', []);
 
         empty($panier[$id]) ? $panier[$id] = (int)$request->request->get('qty', default: 1) : $panier[$id] += (int)$request->request->get('qty', default: 1);
+
+        $session->set('panier', $panier);
+        dd($session);
+    }
+
+    #[Route('/remove/{id}', name: 'remove')]
+    public function remove(Product $product, SessionInterface $session, Request $request)
+    {
+        $id = $product->getId();
+        $panier = $session->get('panier', []);
+
+        if(array_key_exists($id, $panier)){
+            if($panier[$id] > 1){
+                $panier[$id] -= (int)$request->request->get('qty', default: 1);
+            } else {
+                unset($panier[$id]);
+            }
+        }
+
 
         $session->set('panier', $panier);
         dd($session);
