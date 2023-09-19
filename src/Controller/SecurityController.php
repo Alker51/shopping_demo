@@ -31,11 +31,4 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
-
-    #[Route(path: '/disconnect', name: 'app_disconnect')]
-    public function disconnect(UserRepository $userRepository, Session $session): Response
-    {
-
-        return $this->redirectToRoute('app_logout');
-    }
 }
