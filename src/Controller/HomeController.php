@@ -15,7 +15,7 @@ class HomeController extends AbstractController
     {
         $cartLoad = $session->get('cartLoad', false);
         $user = $this->getUser();
-        var_dump($session->get('cartLoad'));
+
         if(!is_null($cartLoad) && !$cartLoad && !empty($user)){
             $this->loadSaveCart($userRepository, $session);
             $session->set('cartLoad', true);

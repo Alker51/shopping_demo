@@ -2,24 +2,40 @@
 
 namespace App\EventListener;
 
-use App\Repository\UserRepository;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class LogoutListener {
-    private $storage;
-    public function __invoke(ExceptionEvent $event, UserRepository $userRepository, Session $session, TokenStorage $storage): void
+
+    protected EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->storage = $storage;
-        $this->saveCart($userRepository, $session);
+        $this->em=$em;
+    }
+    public function onSymfonyComponentSecurityHttpEventLogoutEvent(LogoutEvent $event): void
+    {
+        $repository = $this->em->getRepository(User::class);
+        $session = $event->getRequest()->getSession();
+        $this->saveCart($repository, $session, $event);
+        /*
+        If you need user...
+        if (($token = $event->getToken()) && $user = $token->getUser()) {
+            $user available
+        }
+        */
     }
 
-    public function saveCart(UserRepository $userRepository, Session $session): void
+    public function saveCart(EntityRepository $userRepository, Session $session, LogoutEvent $event): void
     {
-        $token = $this->storage->getToken();
-        $user = $token ? $token->getUser() : null;
+        print_r('ici');
         $cartToSave = $session->get('panier', []);
+        $token = $event->getToken();
+        $user = $token->getUser();
+        $session->set('cartLoad', false);
 
         if(!empty($user) && !empty($cartToSave)) {
             $connectedUsername = $user->getUserIdentifier();
