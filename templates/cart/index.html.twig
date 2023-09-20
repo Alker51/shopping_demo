@@ -40,6 +40,7 @@
     </table>
 
         <div>TOTAL Panier : {{ total }} &euro;</div>
+        <div><a href="{{ path('app_cart_removeAll') }}"><button type="button" class="btn btn-danger btn-sm">Supprimer le panier</button></a></div>
     {% else %}
     <h2>Panier vide</h2>
     {% endif %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +53,7 @@ class CartController extends AbstractController
         ]);
     }
     #[Route('/add/{id}', name: 'add')]
-    public function add(Product $product, SessionInterface $session, Request $request)
+    public function add(Product $product, SessionInterface $session, Request $request): RedirectResponse
     {
         $id = $product->getId();
         $panier = $session->get('panier', []);
@@ -60,11 +61,12 @@ class CartController extends AbstractController
         empty($panier[$id]) ? $panier[$id] = (int)$request->request->get('qty', default: 1) : $panier[$id] += (int)$request->request->get('qty', default: 1);
 
         $session->set('panier', $panier);
-        dd($session);
+
+        return $this->redirectToRoute('app_cart_index');
     }
 
     #[Route('/remove/{id}', name: 'remove')]
-    public function remove(Product $product, SessionInterface $session, Request $request)
+    public function remove(Product $product, SessionInterface $session, Request $request): RedirectResponse
     {
         $id = $product->getId();
         $panier = $session->get('panier', []);
@@ -79,6 +81,12 @@ class CartController extends AbstractController
 
 
         $session->set('panier', $panier);
-        dd($session);
+        return $this->redirectToRoute('app_cart_index');
+    }
+    #[Route('/removeAll', name: 'removeAll')]
+    public function removeAll(SessionInterface $session, Request $request): RedirectResponse
+    {
+        $session->set('panier', []);
+        return $this->redirectToRoute('app_cart_index');
     }
 }
