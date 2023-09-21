@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -26,6 +27,9 @@ class Order
     private ?string $billingTown = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $billingCountry = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $shippingAdress = null;
 
     #[ORM\Column(length: 125)]
@@ -33,9 +37,6 @@ class Order
 
     #[ORM\Column(length: 255)]
     private ?string $shippingTown = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $billingCountry = null;
 
     #[ORM\Column(length: 255)]
     private ?string $shippingCountry = null;
@@ -58,6 +59,18 @@ class Order
 
     #[ORM\Column]
     private ?int $orderState = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $orderDate = null;
+
+    #[ORM\Column]
+    private ?float $Total_WTax = null;
+
+    #[ORM\Column]
+    private ?float $Total_Tax = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $numOrder = null;
 
     public function __construct()
     {
@@ -245,6 +258,54 @@ class Order
     public function setOrderState(int $orderState): static
     {
         $this->orderState = $orderState;
+
+        return $this;
+    }
+
+    public function getOrderDate(): ?\DateTimeInterface
+    {
+        return $this->orderDate;
+    }
+
+    public function setOrderDate(\DateTimeInterface $orderDate): static
+    {
+        $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    public function getTotalWTax(): ?float
+    {
+        return $this->Total_WTax;
+    }
+
+    public function setTotalWTax(float $Total_WTax): static
+    {
+        $this->Total_WTax = $Total_WTax;
+
+        return $this;
+    }
+
+    public function getTotalTax(): ?float
+    {
+        return $this->Total_Tax;
+    }
+
+    public function setTotalTax(float $Total_Tax): static
+    {
+        $this->Total_Tax = $Total_Tax;
+
+        return $this;
+    }
+
+    public function getNumOrder(): ?string
+    {
+        return $this->numOrder;
+    }
+
+    public function setNumOrder(string $numOrder): static
+    {
+        $this->numOrder = $numOrder;
 
         return $this;
     }
