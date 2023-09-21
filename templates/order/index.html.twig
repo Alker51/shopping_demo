@@ -9,12 +9,41 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>{{ controller_name }}</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/shopping_demo/src/Controller/OrderController.php'|file_link(0) }}">src/Controller/OrderController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/shopping_demo/templates/order/index.html.twig'|file_link(0) }}">templates/order/index.html.twig</a></code></li>
-    </ul>
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Etat</th>
+            <th>Compte</th>
+            <th>Total HT</th>
+            <th>Total TTC</th>
+            <th>actions</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr id="user {% if user.verified == true %}userVerified{% else %}userNotVerified{% endif %}">
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
+                    <br><br>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <a href="#" onclick="showAlert('Revoke Admin');"><button type="button" class="btn btn-danger btn-sm">Révoquer Admin</button></a>
+                    {% else %}
+                        <a href="#" onclick="showAlert('Pass Admin');"><button type="button" class="btn btn-danger btn-sm">Passer Admin</button></a>
+                        <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de commandes.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
