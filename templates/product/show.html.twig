@@ -21,10 +21,15 @@
             {% if product.discountedPrice is not null %}<p id="oldPrice">Ancien Prix : {{ product.price }} &euro;</p>{% endif %}
             <div id="zonePanier">
                 <form action="{{ path('app_cart_add', {'id':  product.id}) }}" method="post">
-                    <label>Quantité :
-                        <input class="form-control me-2" name="qty" type="number" min="1" placeholder="1" value="1">
-                    </label>
-                    <button class="btn btn-outline-success" type="submit">Ajouter au panier</button>
+                    {% if product.stock > 0 %}
+                        <label>Quantité :
+                            <input class="form-control me-2" name="qty" type="number" min="1" placeholder="1" value="1">
+                        </label>
+                    
+                        <button class="btn btn-outline-success" type="submit">Ajouter au panier</button>
+                    {% else %}
+                        <button type="button" class="btn btn-danger btn-lg" disabled>épuisé</button>
+                    {% endif %}
                 </form>
             </div>
         </div>
