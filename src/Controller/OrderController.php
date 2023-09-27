@@ -32,6 +32,7 @@ class OrderController extends AbstractController
         $cart = (array)json_decode($_POST['cart']);
         var_dump($cart);
         exit;
+        // @TODO Ajout du traitement pour créer la commande. Peut-être une redirection pour l'adresse etc apres.
         // $order = new Order();
         // $order->
     }
