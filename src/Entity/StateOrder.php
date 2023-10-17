@@ -8,6 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StateOrderRepository::class)]
 class StateOrder
 {
+    const STATE = [
+        'NO_VALID' => 0,
+        'VALID' => 1,
+        'PROCESSING' => 2,
+        'WAIT_SHIPPING' => 3,
+        'SHIPPED' => 4,
+        'ERROR' => 5
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

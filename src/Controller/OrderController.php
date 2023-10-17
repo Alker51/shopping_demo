@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\StateOrder;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
@@ -27,41 +28,51 @@ class OrderController extends AbstractController
             'orders' => $orders
         ]);
     }
-
-    public function completeOrder(Request $request, OrderRepository $orderRepository): Response
+    #[Route('/complete', name: 'complete')]
+    public function complete(Request $request, OrderRepository $orderRepository, ProductRepository $productRepository, UserRepository $userRepository): Response
     {
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $userRepository->findOneBy(['id' => $_POST['user']]);
+            $order->setUserCommand($user);
+
+            $cart = (array)json_decode($_POST['cart']);
+            foreach ($cart as $idProduct => $commandProduct) {
+                $product = $productRepository->findOneBy(['id' => $idProduct]);
+
+                $order->addProduct($product);
+            }
+
+            $order->setOrderState(StateOrder::STATE['NO_VALID']);
             $orderRepository->save($order, true);
 
-            return $this->redirectToRoute('app_order_create', ['order' => $order], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_order_validation', ['order' => $order], Response::HTTP_SEE_OTHER);
+        } elseif ($form->isSubmitted() && !$form->isValid()) {
+            return $this->redirectToRoute('app_order_error', ['order' => $order], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $order,
+        return $this->renderForm('order/index.html.twig', [
+            'order' => $order,
             'form' => $form,
+        ]);    }
+    #[Route('/error', name: 'error')]
+    public function error(): Response
+    {
+        print_r('Page d\'erreur.');
+        exit;
+        return $this->render('order/index.html.twig', [
+            'controller_name' => 'Commandes récentes.',
         ]);
     }
-    #[Route('/create', name: 'create')]
-    public function create(OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
+
+    #[Route('/validation', name: 'validation')]
+    public function validation(OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
     {
-        $user = $userRepository->findOneBy(['id' => $_POST['user']]);
-        var_dump($user->getUserIdentifier());
-        $cart = (array)json_decode($_POST['cart']);
-        var_dump($cart);
-        $orderInformation = $_POST['orderInfos'];
-
-        $order = new Order();
-        $order->setOrderDate(new \DateTime());
-        $order->setUserCommand($user);
-        $order->setOrderState(1);
-        foreach ($cart as $idProduct => $commandProduct) {
-            $product = $productRepository->findOneBy(['id' => $idProduct]);
-
-            $order->addProduct($product);
-        }
+        return $this->render('order/index.html.twig', [
+            'controller_name' => 'Commandes récentes.',
+        ]);
     }
 }

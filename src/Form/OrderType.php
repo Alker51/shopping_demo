@@ -23,13 +23,6 @@ class OrderType extends AbstractType
             ->add('shippingPhoneNum')
             ->add('shippingFirstName')
             ->add('shippingLastName')
-            ->add('orderState')
-            ->add('orderDate')
-            ->add('Total_WTax')
-            ->add('Total_Tax')
-            ->add('numOrder')
-            ->add('Products')
-            ->add('userCommand')
         ;
     }
 

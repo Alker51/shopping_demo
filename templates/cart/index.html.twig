@@ -41,7 +41,7 @@
 
         <div>TOTAL Panier : {{ total }} &euro;</div>
         <div><a href="{{ path('app_cart_removeAll') }}"><button type="button" class="btn btn-danger btn-sm">Supprimer le panier</button></a></div>
-        <form action="{{ path('app_order_create') }}" method="post">
+        <form action="{{ path('app_order_complete') }}" method="post">
             <input type="hidden" name="user" value="{{ app.user.id }}">
             <input type="hidden" name="cart" value="{{ cart|json_encode() }}">
         <div><button type="submit" class="btn btn-success btn-sm">Valider mon panier</button></div>
