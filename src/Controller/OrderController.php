@@ -61,10 +61,8 @@ class OrderController extends AbstractController
     #[Route('/error', name: 'error')]
     public function error(): Response
     {
-        print_r('Page d\'erreur.');
-        exit;
-        return $this->render('order/index.html.twig', [
-            'controller_name' => 'Commandes récentes.',
+        return $this->render('order/error.html.twig', [
+            'controller_name' => 'Erreur Commandes.',
         ]);
     }
 
