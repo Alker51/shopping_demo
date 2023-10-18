@@ -51,7 +51,7 @@ class OrderController extends AbstractController
 
             return $this->redirectToRoute('app_order_validation', ['order' => $order], Response::HTTP_SEE_OTHER);
         } elseif ($form->isSubmitted() && !$form->isValid()) {
-            return $this->redirectToRoute('app_order_error', ['order' => $order], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_order_error', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('order/index.html.twig', [
