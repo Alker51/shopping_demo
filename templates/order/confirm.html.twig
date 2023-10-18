@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
+{% block title %}
+    {{ controller_name }}
 {% endblock %}
 
-{% block title %}
+{% block body %}
+    <h1>{{ controller_name }}</h1>
 
+    <div>{{ dump(order) }}</div>
+
+    <a href="{{ path('app_home') }}"><button type="button" class="btn btn-success btn-sm">Retour à l'acceuil</button></a>
 {% endblock %}
 

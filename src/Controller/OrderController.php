@@ -28,6 +28,7 @@ class OrderController extends AbstractController
             'orders' => $orders
         ]);
     }
+
     #[Route('/complete', name: 'complete')]
     public function complete(Request $request, OrderRepository $orderRepository, ProductRepository $productRepository, UserRepository $userRepository): Response
     {
@@ -94,9 +95,11 @@ class OrderController extends AbstractController
     public function confirm(Order $order, OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
     {
         $order->setOrderState(StateOrder::STATE['VALID']);
+        $orderRepository->save($order, true);
 
         return $this->render('order/confirm.html.twig', [
-            'controller_name' => 'Confirmation de la commande.',
+            'controller_name' => 'Confirmation de votre commande : ' . $order->getNumOrder(),
+            'order' => $order
         ]);
     }
 }
