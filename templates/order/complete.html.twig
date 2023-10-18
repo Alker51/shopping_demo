@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Complete your Order</h1>
 
-    {{ include('order/_form.html.twig') }}
+    {{ include('order/_form.html.twig', {'cart': cart }) }}
 
     <a href="{{ path('app_cart_index') }}">back to cart</a>
 {% endblock %}

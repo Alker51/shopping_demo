@@ -1,10 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
-{% endblock %}
-
 {% block title %}
-
+    {{ controller_name }}
 {% endblock %}
 
+{% block body %}
+    <h1>Validation de votre commande.</h1>
+
+    <h3>Produits :</h3>
+    {{ dump(order) }}
+    {% for product in order.products %}
+        <div>
+            {{ dump(product) }}
+            <a href="{{ path('app_product_show', {'id': product.id}) }}">{{ product.productName }}</a>
+            <img src="{{ product.picturesUrls }}">
+            <div>
+                <p>Prix HT : {{ product.price_wtax }}</p>
+                <p>Prix : {% if product.discountedPrice is not null %}{{ product.discountedPrice }}{% else %}{{ product.price }}{% endif %}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    <a href="{{ path('app_order_confirm', {'id': order.id}) }}"><button class="btn btn-success">Confirmer ma commande</button></a>
+{% endblock %}

@@ -1,4 +1,5 @@
-v{{ form_start(form) }}
+{{ form_start(form) }}
     {{ form_widget(form) }}
-<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    <input type="hidden" name="cart" value="{{ cart }}">
+<button class="btn btn-primary">{{ button_label|default('Valider mes informations') }}</button>
 {{ form_end(form) }}
