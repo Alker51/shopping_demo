@@ -54,7 +54,7 @@ class OrderController extends AbstractController
             return $this->redirectToRoute('app_order_error', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('order/index.html.twig', [
+        return $this->renderForm('order/complete.html.twig', [
             'order' => $order,
             'form' => $form,
         ]);    }
@@ -69,8 +69,17 @@ class OrderController extends AbstractController
     #[Route('/validation', name: 'validation')]
     public function validation(OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
     {
-        return $this->render('order/index.html.twig', [
-            'controller_name' => 'Commandes récentes.',
+        return $this->render('order/validation.html.twig', [
+            'controller_name' => 'Validation de la commande.',
+            'order' => $order
+        ]);
+    }
+
+    #[Route('/confirm/{id}', name: 'confirm')]
+    public function confirm(Order $order, OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
+    {
+        return $this->render('order/confirm.html.twig', [
+            'controller_name' => 'Confirmation de la commande.',
         ]);
     }
 }
