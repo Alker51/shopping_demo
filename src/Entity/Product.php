@@ -42,6 +42,9 @@ class Product
     #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'Products')]
     private Collection $orders;
 
+    #[ORM\Column]
+    private ?float $price_wtax = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -171,6 +174,18 @@ class Product
         if ($this->orders->removeElement($order)) {
             $order->removeProduct($this);
         }
+
+        return $this;
+    }
+
+    public function getPriceWtax(): ?float
+    {
+        return $this->price_wtax;
+    }
+
+    public function setPriceWtax(float $price_wtax): static
+    {
+        $this->price_wtax = $price_wtax;
 
         return $this;
     }

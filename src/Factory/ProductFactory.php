@@ -57,6 +57,7 @@ final class ProductFactory extends ModelFactory
             'description' => $desc,
             'picturesUrls' => $picture,
             'price' => $price,
+            'price_wtax' => round($price/1.2, 2),
             'productName' => $name,
             'stock' => $stock,
             'display' => $display,
