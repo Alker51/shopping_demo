@@ -17,11 +17,22 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/order', name: 'app_order_')]
 class OrderController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/admin', name: 'admin')]
     #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to manage Order.')]
-    public function index(OrderRepository $orderRepository): Response
+    public function admin(OrderRepository $orderRepository): Response
     {
         $orders = $orderRepository->findBy([],['orderDate' => 'ASC']);
+
+        return $this->render('order/admin.html.twig', [
+            'controller_name' => 'Administration des commandes',
+            'orders' => $orders
+        ]);
+    }
+
+    #[Route('/', name: 'index')]
+    public function index(OrderRepository $orderRepository): Response
+    {
+        $orders = $orderRepository->findBy(['userCommand' => $this->getUser()],['orderDate' => 'ASC']);
 
         return $this->render('order/index.html.twig', [
             'controller_name' => 'Commandes récentes.',
