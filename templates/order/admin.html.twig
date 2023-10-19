@@ -20,53 +20,50 @@
         </tr>
         </thead>
         <tbody>
-        {% if orders is empty %}
-            {% for order in orders %}
-                <tr>
-                    <td>{{ order.numOrder }}</td>
-                    <td>{{ order.orderDate|date('d/m/Y') }}</td>
-                    <td>
-                        {% switch order.orderState %}
-                            {% case '0' %}
-                                {% set color = 'dark' %}
-                                {% set text = 'Non validée' %}
-                            {% case '1' %}
-                                {% set color = 'info' %}
-                                {% set text = 'Validée' %}
-                            {% case '2' %}
-                                {% set color = 'primary' %}
-                                {% set text = 'Préparation' %}
-                            {% case '3' %}
-                                {% set color = 'warning' %}
-                                {% set text = 'Attente d\'envoi' %}
-                            {% case '4' %}
-                                {% set color = 'success' %}
-                                {% set text = 'Éxpédié' %}
-                            {% case '5' %}
-                                {% set color = 'danger' %}
-                                {% set text = 'Erreur' %}
-                            {% default %}
-                                {% set color = 'light' %}
-                                {% set text = 'Pas d\'état' %}
-                        {% endswitch %}
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.numOrder }}</td>
+                <td>{{ order.orderDate|date('d/m/Y') }}</td>
+                <td>
+                    {% if order.orderState == '0' %}
+                        {% set color = 'dark' %}
+                        {% set text = 'Non validée' %}
+                    {% elseif order.orderState == '1' %}
+                        {% set color = 'info' %}
+                        {% set text = 'Validée' %}
+                    {% elseif order.orderState == '2' %}
+                        {% set color = 'primary' %}
+                        {% set text = 'Préparation' %}
+                    {% elseif order.orderState == '3' %}
+                        {% set color = 'warning' %}
+                        {% set text = 'Attente d\'envoi' %}
+                    {% elseif order.orderState == '4' %}
+                        {% set color = 'success' %}
+                        {% set text = 'Éxpédié' %}
+                    {% elseif order.orderState == '5' %}
+                        {% set color = 'danger' %}
+                        {% set text = 'Erreur' %}
+                    {% else %}
+                        {% set color = 'light' %}
+                        {% set text = 'Pas d\'état' %}
+                    {% endif %}
 
-                        <span class="badge text-bg-{{ color }}">{{ text }}</span>
-                    </td>
-                    <td><a href="{{ path('app_user_show', {'id': order.userCommand.id}) }}">Compte Client</a></td>
-                    <td>{{ order.totalWTax }} &euro;</td>
-                    <td>{{ order.totalTax }} &euro;</td>
-                    <td>
-                        <a href="#"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
-                        <a href="#"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
-                        <a href="#"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
-                    </td>
-                </tr>
-            {% endfor %}
+                    <span class="badge text-bg-{{ color }}">{{ text }}</span>
+                </td>
+                <td><a href="{{ path('app_user_show', {'id': order.userCommand.id}) }}">Compte Client</a></td>
+                <td>{{ order.totalWTax }} &euro;</td>
+                <td>{{ order.totalTax }} &euro;</td>
+                <td>
+                    <a href="#"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
+                    <a href="#"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
+                    <a href="#"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+                </td>
+            </tr>
         {% else %}
             <tr>
-                <td colspan="14">Aucune commande trouvée.</td>
+                <td colspan="7">Aucune commande trouvée.</td>
             </tr>
-        {% endif %}
+        {% endfor %}
         </tbody>
     </table>
 
