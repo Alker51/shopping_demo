@@ -30,13 +30,17 @@ class OrderController extends AbstractController
     }
 
     #[Route('/', name: 'index')]
-    public function index(OrderRepository $orderRepository): Response
+    public function index(OrderRepository $orderRepository, UserRepository $userRepository): Response
     {
-        $orders = $orderRepository->findBy(['userCommand' => $this->getUser()],['orderDate' => 'ASC']);
+        $user = $userRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
+
+        $orders = $orderRepository->findBy(['userCommand' => $user],['orderDate' => 'ASC']);
+
 
         return $this->render('order/index.html.twig', [
             'controller_name' => 'Commandes récentes.',
-            'orders' => $orders
+            'orders' => $orders,
+            'user' => $user
         ]);
     }
 
