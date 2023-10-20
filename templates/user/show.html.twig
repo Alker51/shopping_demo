@@ -6,6 +6,10 @@
     <link href="{{ asset('styles/usersStyle.css') }}" rel="stylesheet">
 {% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('scripts/usersScript.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <div>
     <h1 id="MainTitle">Information de compte : {{ user.username }}  <span class="badge bg-info rounded-pill" title="ID de votre compte">{{ user.id }}</span></h1></div>
@@ -41,10 +45,14 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
+                <th>Informations Personnelles</th>
+                <td><button type="button" id="buttonPersonalInfos" onclick="showHideToggle()" class="btn btn-dark">HIDE</button></td>
+            </tr>
+            <tr class="personalInfos">
                 <th>
-                    FirstName
+                    Prénom
                     <br>
-                    LastName
+                    Nom
                 </th>
                 <td>
                     {{ user.firstName }}
@@ -52,25 +60,29 @@
                     {{ user.lastName }}
                 </td>
             </tr>
-            <tr>
+            <tr class="personalInfos">
                 <th>Adresse</th>
                 <td>
-                    Line 1 : {{ user.AdresseLine1 }}
+                    Ligne 1 : {{ user.AdresseLine1 }}
                     <br>
-                    Line 2 : {{ user.AdresseLine2 }}
+                    Ligne 2 : {{ user.AdresseLine2 }}
                     <br>
-                    Postal Code : {{ user.postalCode }}
+                    Code postal : {{ user.postalCode }}
                     <br>
-                    Town : {{ user.city }}
+                    Ville : {{ user.city }}
                 </td>
             </tr>
-            <tr>
-                <th>PhoneNumber</th>
-                <td>{{ user.phoneNumber }}</td>
+            <tr class="personalInfos">
+                <th>Téléphone</th>
+                <td>{% if user.phoneNumber is empty %}Aucun{% else %}{{ user.phoneNumber }}{% endif %}</td>
             </tr>
-            <tr>
+            <tr class="personalInfos">
                 <th>AvatarUrl</th>
                 <td><img id="avatarTable" src="{{ user.avatarUrl }}" alt="avatar"><a href="#" onclick="showAlert('Suppr avatar');"><button type="button" class="btn btn-danger btn-sm">Supprimer l'avatar</button></a></td>
+            </tr>
+            <tr>
+                <th>Commandes récentes</th>
+                <td><a href="{{ path('app_order_index') }}"><button type="button" class="btn btn-info">Voir commandes récentes</button></a></td>
             </tr>
         </tbody>
     </table>
@@ -83,3 +95,5 @@
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
+
+
