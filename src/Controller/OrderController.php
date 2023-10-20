@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/order', name: 'app_order_')]
 class OrderController extends AbstractController
 {
-    #[Route('/admin', name: 'admin')]
+    #[Route('/manage', name: 'manage')]
     #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to manage Order.')]
     public function admin(OrderRepository $orderRepository): Response
     {
