@@ -18,6 +18,7 @@ Ce site est un exemple de site e-commerce.
 4. $ `php bin/console doctrine:database:create`
 5. $ `php bin/console doctrine:schema:create`
 6. $ `php bin/console doctrine:migrations:migrate`
+7. $ `php bin/console doctrine:fixtures:load`
 
 ### Idée pour la suite du projet
 
