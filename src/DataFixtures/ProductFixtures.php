@@ -24,6 +24,6 @@ class ProductFixtures extends Fixture
 
         $manager->persist($product);
         $manager->flush();
-        $products = ProductFactory::createMany(10);
+        ProductFactory::createMany(10);
     }
 }

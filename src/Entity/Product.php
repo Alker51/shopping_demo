@@ -178,12 +178,12 @@ class Product
         return $this;
     }
 
-    public function getPrice_wtax(): ?float
+    public function getPriceWtax(): ?float
     {
         return $this->price_wtax;
     }
 
-    public function setPrice_wtax(float $price_wtax): static
+    public function setPriceWTax(float $price_wtax): static
     {
         $this->price_wtax = $price_wtax;
 

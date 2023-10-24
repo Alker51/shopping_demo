@@ -15,7 +15,7 @@
             <a href="{{ path('app_product_show', {'id': product.id}) }}">{{ product.productName }}</a>
             <img src="{{ product.picturesUrls }}">
             <div>
-                <p>Prix HT : {{ product.price_wtax }}</p>
+                <p>Prix HT : {{ product.priceWtax }}</p>
                 <p>Prix : {% if product.discountedPrice is not null %}{{ product.discountedPrice }}{% else %}{{ product.price }}{% endif %}</p>
             </div>
         </div>

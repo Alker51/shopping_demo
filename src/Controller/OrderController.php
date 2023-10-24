@@ -21,7 +21,7 @@ class OrderController extends AbstractController
     #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to manage Order.')]
     public function admin(OrderRepository $orderRepository): Response
     {
-        $orders = $orderRepository->findBy([],['orderDate' => 'ASC']);
+        $orders = $orderRepository->findBy([], ['orderDate' => 'ASC']);
 
         return $this->render('order/admin.html.twig', [
             'controller_name' => 'Administration des commandes',
@@ -34,7 +34,7 @@ class OrderController extends AbstractController
     {
         $user = $userRepository->findOneBy(['username' => $this->getUser()->getUserIdentifier()]);
 
-        $orders = $orderRepository->findBy(['userCommand' => $user],['orderDate' => 'ASC']);
+        $orders = $orderRepository->findBy(['userCommand' => $user], ['orderDate' => 'ASC']);
 
 
         return $this->render('order/index.html.twig', [
@@ -64,11 +64,12 @@ class OrderController extends AbstractController
 
                 $order->addProduct($product);
 
-                $totalHT += $product->getPrice_wtax();
-                if(!empty($product->getDiscountedPrice()))
+                $totalHT += $product->getPriceWtax();
+                if(!empty($product->getDiscountedPrice())) {
                     $totalTTC += $product->getDiscountedPrice();
-                else
+                } else {
                     $totalTTC += $product->getPrice();
+                }
             }
             $order->setTotalTax($totalTTC);
             $order->setTotalWTax($totalHT);
@@ -88,7 +89,8 @@ class OrderController extends AbstractController
             'order' => $order,
             'form' => $form,
             'cart' => $_POST['cart']
-        ]);    }
+        ]);
+    }
     #[Route('/error', name: 'error')]
     public function error(): Response
     {
