@@ -12,3 +12,7 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+###> Fichier de cache ###
+*.cache
+###< Fichier de cache ###
