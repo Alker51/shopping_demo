@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -21,10 +19,10 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 1000)]
     private ?string $picturesUrls = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 1000, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -39,16 +37,8 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?float $discountedPrice = null;
 
-    #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'Products')]
-    private Collection $orders;
-
     #[ORM\Column]
-    private ?float $priceWtax = null;
-
-    public function __construct()
-    {
-        $this->orders = new ArrayCollection();
-    }
+    private ?float $priceWTax = null;
 
     public function getId(): ?int
     {
@@ -60,7 +50,7 @@ class Product
         return $this->productName;
     }
 
-    public function setProductName(string $productName): self
+    public function setProductName(string $productName): static
     {
         $this->productName = $productName;
 
@@ -72,7 +62,7 @@ class Product
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
@@ -84,7 +74,7 @@ class Product
         return $this->picturesUrls;
     }
 
-    public function setPicturesUrls(string $picturesUrls): self
+    public function setPicturesUrls(string $picturesUrls): static
     {
         $this->picturesUrls = $picturesUrls;
 
@@ -96,7 +86,7 @@ class Product
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -151,41 +141,14 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, Order>
-     */
-    public function getOrders(): Collection
+    public function getPriceWTax(): ?float
     {
-        return $this->orders;
+        return $this->priceWTax;
     }
 
-    public function addOrder(Order $order): static
+    public function setPriceWTax(float $priceWTax): static
     {
-        if (!$this->orders->contains($order)) {
-            $this->orders->add($order);
-            $order->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOrder(Order $order): static
-    {
-        if ($this->orders->removeElement($order)) {
-            $order->removeProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function getPriceWtax(): ?float
-    {
-        return $this->priceWtax;
-    }
-
-    public function setPriceWTax(float $priceWtax): static
-    {
-        $this->priceWtax = $priceWtax;
+        $this->priceWTax = $priceWTax;
 
         return $this;
     }

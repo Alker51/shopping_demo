@@ -21,46 +21,20 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function save(Product $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Product $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    /**
-     * @return Product[] Returns an array of Product objects
-     */
-    public function search(int|string $value = ''): array
-    {
-        $qb = $this->createQueryBuilder('p');
-
-        if(!empty($value)) {
-            if(is_string($value)) {
-                $qb->andWhere($qb->expr()->like('p.productName', ':val'));
-            } elseif(is_int($value)) {
-                $qb->andWhere('p.id = :val');
-            }
-
-            $qb->setParameter('val', "%$value%");
-        }
-
-        $qb ->orderBy('p.id', 'ASC');
-        $query = $qb->getQuery();
-
-        return $query->execute();
-    }
+//    /**
+//     * @return Product[] Returns an array of Product objects
+//     */
+//    public function findByExampleField($value): array
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->andWhere('p.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('p.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
 //    public function findOneBySomeField($value): ?Product
 //    {

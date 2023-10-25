@@ -64,7 +64,7 @@ class OrderController extends AbstractController
 
                 $order->addProduct($product);
 
-                $totalHT += $product->getPriceWtax();
+                $totalHT += $product->getpriceWTax();
                 if(!empty($product->getDiscountedPrice())) {
                     $totalTTC += $product->getDiscountedPrice();
                 } else {
