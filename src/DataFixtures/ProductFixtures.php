@@ -20,7 +20,7 @@ class ProductFixtures extends Fixture
         $product->setStock(30);
         $product->setDisplay(true);
         $product->setPrice($price);
-        $product->setPrice_wtax(round($price/1.2, 2));
+        $product->setPriceWTax(round($price/1.2, 2));
 
         $manager->persist($product);
         $manager->flush();
