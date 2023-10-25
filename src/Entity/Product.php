@@ -43,7 +43,7 @@ class Product
     private Collection $orders;
 
     #[ORM\Column]
-    private ?float $price_wtax = null;
+    private ?float $priceWtax = null;
 
     public function __construct()
     {
@@ -180,12 +180,12 @@ class Product
 
     public function getPriceWtax(): ?float
     {
-        return $this->price_wtax;
+        return $this->priceWtax;
     }
 
-    public function setPriceWTax(float $price_wtax): static
+    public function setPriceWTax(float $priceWtax): static
     {
-        $this->price_wtax = $price_wtax;
+        $this->priceWtax = $priceWtax;
 
         return $this;
     }
