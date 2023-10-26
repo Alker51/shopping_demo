@@ -21,28 +21,44 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    //    /**
-    //     * @return Product[] Returns an array of Product objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function save(Product $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
 
-    //    public function findOneBySomeField($value): ?Product
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Product $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * @return Product[] Returns an array of Product objects
+     */
+    public function search(int|string $value = ''): array
+    {
+        $querybuilder = $this->createQueryBuilder('p');
+
+        if(!empty($value)) {
+            if(is_string($value)) {
+                $querybuilder->andWhere($querybuilder->expr()->like('p.productName', ':val'));
+            } elseif(is_int($value)) {
+                $querybuilder->andWhere('p.id = :val');
+            }
+
+            $querybuilder->setParameter('val', "%$value%");
+        }
+
+        $querybuilder ->orderBy('p.id', 'ASC');
+        $query = $querybuilder->getQuery();
+
+        return $query->execute();
+    }
 }

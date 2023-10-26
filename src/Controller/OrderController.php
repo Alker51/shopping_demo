@@ -73,9 +73,7 @@ class OrderController extends AbstractController
             }
             $order->setTotalTax($totalTTC);
             $order->setTotalWTax($totalHT);
-
-            $order->setNumOrder('SHPG-' . $order->getId());
-
+            $order->setNumOrder('SHPG-');
             $order->setOrderDate(new \DateTime());
             $order->setOrderState(StateOrder::STATE['NO_VALID']);
             $orderRepository->save($order, true);
@@ -102,6 +100,8 @@ class OrderController extends AbstractController
     #[Route('/validation/{id}', name: 'validation')]
     public function validation(Order $order, OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
     {
+        $order->setNumOrder('SHPG-' . $order->getId());
+        $orderRepository->save($order, true);
         return $this->render('order/validation.html.twig', [
             'controller_name' => 'Validation de la commande.',
             'order' => $order
