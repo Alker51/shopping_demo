@@ -8,9 +8,11 @@ use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -98,7 +100,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/validation/{id}', name: 'validation')]
-    public function validation(Order $order, OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
+    public function validation(Order $order, OrderRepository $orderRepository): Response
     {
         $order->setNumOrder('SHPG-' . $order->getId());
         $orderRepository->save($order, true);
@@ -108,11 +110,19 @@ class OrderController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     #[Route('/confirm/{id}', name: 'confirm')]
-    public function confirm(Order $order, OrderRepository $orderRepository, UserRepository $userRepository, ProductRepository $productRepository): Response
+    public function confirm(Order $order, OrderRepository $orderRepository, SessionInterface $session): Response
     {
         $order->setOrderState(StateOrder::STATE['VALID']);
         $orderRepository->save($order, true);
+
+        $cartC = new CartController();
+        if(!$cartC->removeAll($session, 'boolean')) {
+            throw new Exception("Le panier n'a pas été supprimé apres la confirmation.");
+        }
 
         return $this->render('order/confirm.html.twig', [
             'controller_name' => 'Confirmation de votre commande : ' . $order->getNumOrder(),
