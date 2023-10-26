@@ -14,7 +14,8 @@ class StateOrder
         'PROCESSING' => 2,
         'WAIT_SHIPPING' => 3,
         'SHIPPED' => 4,
-        'ERROR' => 5
+        'ERROR' => 5,
+        'CANCEL' => 6
     ];
 
     #[ORM\Id]

@@ -56,7 +56,7 @@
                 <td>
                     <a href="#"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
                     <a href="#"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
-                    <a href="#"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+                    <a href="{{ path('app_order_cancel', {id: order.id})}}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
                 </td>
             </tr>
         {% else %}

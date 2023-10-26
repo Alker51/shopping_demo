@@ -129,4 +129,29 @@ class OrderController extends AbstractController
             'order' => $order
         ]);
     }
+
+    #[Route('/cancel/{id}', name: 'cancel')]
+    public function cancel(Order $order, OrderRepository $orderRepository, UserRepository $userRepository): Response
+    {
+        $cancel = $_POST['cancel'] ?? '';
+
+        if(is_bool($cancel)) {
+            if ($cancel) {
+                $order->setOrderState(StateOrder::STATE['CANCEL']);
+                $orderRepository->save($order, true);
+
+                return $this->render('order/cancel_confirm.html.twig', [
+                    'controller_name' => 'Confirmation d\'annulation de votre commande : ' . $order->getNumOrder(),
+                    'orderId' => $order->getId()
+                ]);
+            } else {
+                return $this->index($orderRepository, $userRepository);
+            }
+        } else {
+            return $this->render('order/cancel.html.twig', [
+                'controller_name' => 'êtes-vous sur de vouloir annuler votre commande ' . $order->getNumOrder() . '?',
+                'orderId' => $order->getId(),
+            ]);
+        }
+    }
 }

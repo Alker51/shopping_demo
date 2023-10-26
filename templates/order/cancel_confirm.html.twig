@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ controller_name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ controller_name }}</h1>
+    <a href="{{ path('app_home') }}"><button type="button" class="btn btn-danger">Retour à l'accueil.</button></a>
+{% endblock %}
