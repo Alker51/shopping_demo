@@ -35,7 +35,7 @@
                         {% set color = 'primary' %}
                         {% set text = 'Préparation' %}
                     {% elseif order.orderState == '3' %}
-                        {% set color = 'warning' %}
+                        {% set color = 'secondary' %}
                         {% set text = 'Attente d\'envoi' %}
                     {% elseif order.orderState == '4' %}
                         {% set color = 'success' %}
@@ -43,6 +43,9 @@
                     {% elseif order.orderState == '5' %}
                         {% set color = 'danger' %}
                         {% set text = 'Erreur' %}
+                    {% elseif order.orderState == '6' %}
+                        {% set color = 'warning' %}
+                        {% set text = 'Annulé' %}
                     {% else %}
                         {% set color = 'light' %}
                         {% set text = 'Pas d\'état' %}

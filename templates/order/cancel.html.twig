@@ -9,7 +9,7 @@
         <h1>{{ controller_name }}</h1>
         <br>
         <form method="post" action="{{ path('app_order_cancel', {id: orderId}) }}">
-            <button type="submit" class="btn btn-success" name="cancel" value="false">Non, je conserve ma commande.</button>
+            <button type="submit" class="btn btn-success" name="cancel" value="false">Non, je conserve ma commande et je retourne à l'accueil.</button>
             <button type="submit" class="btn btn-danger" name="cancel" value="true">Oui je souhaite annuler ma commande.</button>
         </form>
     </div>

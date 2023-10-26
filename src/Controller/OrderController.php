@@ -133,10 +133,10 @@ class OrderController extends AbstractController
     #[Route('/cancel/{id}', name: 'cancel')]
     public function cancel(Order $order, OrderRepository $orderRepository, UserRepository $userRepository): Response
     {
-        $cancel = $_POST['cancel'] ?? '';
+        $cancel = $_POST['cancel'] ?? null;
 
-        if(is_bool($cancel)) {
-            if ($cancel) {
+        if(is_string($cancel)) {
+            if ($cancel == "true") {
                 $order->setOrderState(StateOrder::STATE['CANCEL']);
                 $orderRepository->save($order, true);
 
@@ -145,7 +145,7 @@ class OrderController extends AbstractController
                     'orderId' => $order->getId()
                 ]);
             } else {
-                return $this->index($orderRepository, $userRepository);
+                return $this->redirectToRoute('app_home');
             }
         } else {
             return $this->render('order/cancel.html.twig', [
