@@ -14,9 +14,8 @@
     <table class="table table-responsive">
         <thead>
         <tr>
-            <th>Id</th>
+            <th></th>
             <th>Etat</th>
-            <th>Compte</th>
             <th>Total HT</th>
             <th>Total TTC</th>
             <th>actions</th>
@@ -25,16 +24,54 @@
         </thead>
         <tbody>
         {% for order in orders %}
-            <tr id="user {% if user.verified == true %}userVerified{% else %}userNotVerified{% endif %}">
+            <tr>
+                <td>{{ order.numOrder }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
-                    <br><br>
-                    {% if 'ROLE_ADMIN' in user.roles %}
-                        <a href="#" onclick="showAlert('Revoke Admin');"><button type="button" class="btn btn-danger btn-sm">Révoquer Admin</button></a>
+                    <!-- TODO:  A optimiser en back -->
+                    {% if order.orderState == '0' %}
+                        {% set color = 'dark' %}
+                        {% set text = 'Non validée' %}
+                    {% elseif order.orderState == '1' %}
+                        {% set color = 'info' %}
+                        {% set text = 'Validée' %}
+                    {% elseif order.orderState == '2' %}
+                        {% set color = 'primary' %}
+                        {% set text = 'Préparation' %}
+                    {% elseif order.orderState == '3' %}
+                        {% set color = 'secondary' %}
+                        {% set text = 'Attente d\'envoi' %}
+                    {% elseif order.orderState == '4' %}
+                        {% set color = 'success' %}
+                        {% set text = 'Éxpédié' %}
+                    {% elseif order.orderState == '5' %}
+                        {% set color = 'danger' %}
+                        {% set text = 'Erreur' %}
+                    {% elseif order.orderState == '6' %}
+                        {% set color = 'warning' %}
+                        {% set text = 'Annulé' %}
                     {% else %}
-                        <a href="#" onclick="showAlert('Pass Admin');"><button type="button" class="btn btn-danger btn-sm">Passer Admin</button></a>
-                        <a href="#" onclick="showAlert('Ban');"><button type="button" class="btn btn-danger btn-sm">Bannir</button></a>
+                        {% set color = 'light' %}
+                        {% set text = 'Pas d\'état' %}
+                    {% endif %}
+                    <!-- TODO:  A optimiser en back -->
+                    <span class="badge text-bg-{{ color }}">{{ text }}</span>
+                </td>
+                <td>
+                    {{ order.totalWTax }} &euro;
+                </td>
+                <td>
+                    {{ order.totalTax }} &euro;
+                </td>
+                <td>
+                    <a href=""><button type="button" class="btn btn-primary btn-sm">Show</button></a>
+                    {% if order.orderState == '6' %}
+                        <a href=""><button type="button" class="btn btn-success btn-sm">Reprendre</button></a>
+                    {% else %}
+                        <a href="{{ path('app_order_cancel', {id: order.id}) }}"><button type="button" class="btn btn-success btn-sm">Annuler</button></a>
+                    {% endif %}
+                    <br><br>
+                    {% if 'ROLE_ADMIN' in user.roles and order.orderState == '6' %}
+                        <a href="#" onclick="showAlert('Revoke Admin');"><button type="button" class="btn btn-danger btn-sm">Supprimer la commande</button></a>
                     {% endif %}
                 </td>
             </tr>
