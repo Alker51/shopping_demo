@@ -25,6 +25,7 @@
                 <td>{{ order.numOrder }}</td>
                 <td>{{ order.orderDate|date('d/m/Y') }}</td>
                 <td>
+                    <!-- TODO:  A optimiser en back -->
                     {% if order.orderState == '0' %}
                         {% set color = 'dark' %}
                         {% set text = 'Non validée' %}
@@ -50,6 +51,7 @@
                         {% set color = 'light' %}
                         {% set text = 'Pas d\'état' %}
                     {% endif %}
+                    <!-- TODO:  A optimiser en back -->
 
                     <span class="badge text-bg-{{ color }}">{{ text }}</span>
                 </td>
