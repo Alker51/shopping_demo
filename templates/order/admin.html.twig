@@ -60,6 +60,9 @@
                     <a href="#"><button type="button" class="btn btn-primary btn-sm">Show</button></a>
                     <a href="#"><button type="button" class="btn btn-secondary btn-sm">Edit</button></a>
                     <a href="{{ path('app_order_cancel', {id: order.id})}}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+                    {% if order.orderState == '6' %}
+                        <a href="{{ path('app_order_delete', {id: order.id})}}"><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -70,7 +73,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+    <a href="#">Create new</a>
 {% endblock %}
 
 

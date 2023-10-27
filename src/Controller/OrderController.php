@@ -154,4 +154,21 @@ class OrderController extends AbstractController
             ]);
         }
     }
+
+    /**
+     * @throws Exception
+     */
+    #[Route('/delete/{id}', name: 'delete')]
+    #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to delete orders.')]
+    public function delete(Order $order, OrderRepository $orderRepository): Response
+    {
+        if($order->getOrderState() == StateOrder::STATE['CANCEL']) {
+            $orderRepository->remove($order, true);
+        } else {
+            throw new Exception("Attention, impossible de supprimer une commande qui n'est pas annulée.");
+        }
+
+
+        return $this->redirectToRoute('app_order_manage', [], Response::HTTP_SEE_OTHER);
+    }
 }
