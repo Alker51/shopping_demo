@@ -171,4 +171,15 @@ class OrderController extends AbstractController
 
         return $this->redirectToRoute('app_order_manage', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/show/{id}', name: 'show')]
+    public function show(Order $order): Response
+    {
+        $user = $order->getUserCommand();
+        return $this->render('order/show.html.twig', [
+            'controller_name' => 'Détail de votre commande ' . $order->getNumOrder(),
+            'order' => $order,
+            'user' => $user
+        ]);
+    }
 }

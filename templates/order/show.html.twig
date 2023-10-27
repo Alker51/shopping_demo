@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ controller_name }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ controller_name }}</h1>
+
+    <div>
+        <h2>Détail de la commande</h2>
+        <span>Date de commande : {{ order.orderDate|date('d/m/Y') }}</span><br>
+
+        <!-- TODO:  A optimiser en back -->
+        {% if order.orderState == '0' %}
+            {% set color = 'dark' %}
+            {% set text = 'Non validée' %}
+        {% elseif order.orderState == '1' %}
+            {% set color = 'info' %}
+            {% set text = 'Validée' %}
+        {% elseif order.orderState == '2' %}
+            {% set color = 'primary' %}
+            {% set text = 'Préparation' %}
+        {% elseif order.orderState == '3' %}
+            {% set color = 'secondary' %}
+            {% set text = 'Attente d\'envoi' %}
+        {% elseif order.orderState == '4' %}
+            {% set color = 'success' %}
+            {% set text = 'Éxpédié' %}
+        {% elseif order.orderState == '5' %}
+            {% set color = 'danger' %}
+            {% set text = 'Erreur' %}
+        {% elseif order.orderState == '6' %}
+            {% set color = 'warning' %}
+            {% set text = 'Annulé' %}
+        {% else %}
+            {% set color = 'light' %}
+            {% set text = 'Pas d\'état' %}
+        {% endif %}
+        <!-- TODO:  A optimiser en back -->
+
+        <span>Etat :
+            <span class="badge text-bg-{{ color }}">{{ text }}</span>
+        </span><br>
+        <span>Total HT : {{ order.totalWTax }} &euro;</span><br>
+        <span>Total TTC : {{ order.totalTax }} &euro;</span><br>
+    </div>
+    <div>
+        <div>
+            <h2>Adresse de facturation</h2>
+            <span>Nom : {{ user.lastName }}</span><br>
+            <span>Prénom : {{ user.firstName }}</span><br>
+            <span>Adresse : {{ order.billingAdress }}</span><br>
+            <span>Ville / CP : {{ order.billingTown }} / {{ order.billingPostCode }}</span><br>
+            <span>Pays : {{ order.billingCountry }}</span><br>
+        </div>
+        <div>
+            <h2>Adresse de livraison</h2>
+            <span>Nom : {{ order.shippingLastName }}</span><br>
+            <span>Prénom : {{ order.shippingFirstName }}</span><br>
+            <span>Adresse : {{ order.shippingAdress }}</span><br>
+            <span>Ville / CP : {{ order.shippingTown }} / {{ order.shippingPostCode }}</span><br>
+            <span>Pays : {{ order.shippingCountry }}</span><br>
+            <span>Téléphone : {{ order.shippingPhoneNum }}</span><br>
+        </div>
+    </div>
+    <div>
+        <h4>Gestion de la commande</h4>
+        <a href="{{ path('app_order_cancel', {id: order.id})}}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
+        {% if order.orderState == '6'%}
+            <a href="{{ path('app_order_delete', {id: order.id})}}"><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
