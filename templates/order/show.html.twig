@@ -4,10 +4,15 @@
     {{ controller_name }}
 {% endblock %}
 
-{% block body %}
-    <h1>{{ controller_name }}</h1>
+{% block stylesheets %}
+    <link href="{{ asset('styles/productsStyle.css') }}" rel="stylesheet">
+    <link href="{{ asset('styles/ordersStyle.css') }}" rel="stylesheet">
+{% endblock %}
 
-    <div>
+{% block body %}
+    <h1 id="title">{{ controller_name }}</h1>
+
+    <div id="orderInformations">
         <h2>Détail de la commande</h2>
         <span>Date de commande : {{ order.orderDate|date('d/m/Y') }}</span><br>
 
@@ -45,7 +50,7 @@
         <span>Total HT : {{ order.totalWTax }} &euro;</span><br>
         <span>Total TTC : {{ order.totalTax }} &euro;</span><br>
     </div>
-    <div>
+    <div id="orderInformationsShipping">
         <div>
             <h2>Adresse de facturation</h2>
             <span>Nom : {{ user.lastName }}</span><br>
@@ -64,7 +69,46 @@
             <span>Téléphone : {{ order.shippingPhoneNum }}</span><br>
         </div>
     </div>
-    <div>
+    <div id="orderInformations">
+        <h4>Produit de la commande</h4>
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Nom</th>
+                <th>Stock</th>
+                <th>Total HT</th>
+                <th>Total TTC</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td id="imageList">
+                        <img id="productImage" src="{{ product.picturesUrls }}" alt="{{ product.productName }}">
+                    </td>
+                    <td>
+                        {{ product.productName }}
+                    </td>
+                    <td>
+                        {{ product.stock }}
+                    </td>
+                    <td>
+                        {{ product.priceWTax }} &euro;
+                    </td>
+                    <td>
+                        {% if product.discount is empty %}
+                            {{ product.price }} &euro;
+                        {% else %}
+                            {{ product.discountedPrice }} &euro; // - {{ product.discount }} %
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="orderInformations">
         <h4>Gestion de la commande</h4>
         <a href="{{ path('app_order_cancel', {id: order.id})}}"><button type="button" class="btn btn-secondary btn-sm">Cancel</button></a>
         {% if order.orderState == '6'%}

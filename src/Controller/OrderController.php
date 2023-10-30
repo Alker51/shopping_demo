@@ -175,11 +175,11 @@ class OrderController extends AbstractController
     #[Route('/show/{id}', name: 'show')]
     public function show(Order $order): Response
     {
-        $user = $order->getUserCommand();
         return $this->render('order/show.html.twig', [
             'controller_name' => 'Détail de votre commande ' . $order->getNumOrder(),
             'order' => $order,
-            'user' => $user
+            'user' => $order->getUserCommand(),
+            'products' => $order->getProducts()->toArray()
         ]);
     }
 }

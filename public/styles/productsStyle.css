@@ -55,3 +55,7 @@ div#gallery {
 div#gallery > * {
     max-width: 100%;
 }
+
+td#imageList {
+    max-width: 1rem;
+}

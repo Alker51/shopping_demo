@@ -1,0 +1,14 @@
+div#orderInformationsShipping {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+div#orderInformations {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+h1#title {
+    text-align: center;
+}
