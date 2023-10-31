@@ -38,14 +38,14 @@
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>
-
-    <div>
-        <p>Pas de compte ?</p>
-        <a href="{{ path('app_register') }}">
-            <button class="btn btn-lg btn-success" type="submit">
-                Create account
-            </button>
-        </a>
-    </div>
 </form>
+
+<div>
+    <p>Pas de compte ?</p>
+    <a href="{{ path('app_register') }}">
+        <button class="btn btn-lg btn-success">
+            Create account
+        </button>
+    </a>
+</div>
 {% endblock %}
