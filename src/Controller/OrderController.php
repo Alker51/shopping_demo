@@ -8,17 +8,27 @@ use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
 use Exception;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/order', name: 'app_order_')]
 class OrderController extends AbstractController
 {
+    private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier)
+    {
+        $this->emailVerifier = $emailVerifier;
+    }
+
     #[Route('/manage', name: 'manage')]
     #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to manage Order.')]
     public function admin(OrderRepository $orderRepository): Response
@@ -123,6 +133,22 @@ class OrderController extends AbstractController
         if(!$cartC->removeAll($session, 'boolean')) {
             throw new Exception("Le panier n'a pas été supprimé apres la confirmation.");
         }
+        $user = $this->getUser();
+
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            (new TemplatedEmail())
+                ->from(new Address('testdevremy@gmail.com', 'Shopping_Demo Order Confirmation'))
+                ->to($user->getEmail())
+                ->subject('Thanks for your order ' . $order->getNumOrder())
+                ->htmlTemplate('order/confirmation_email.html.twig')
+                ->context([
+                    'order' => $order,
+                    'user' => $user,
+                    'products' => $order->getProducts()->toArray()
+                ])
+        );
 
         return $this->render('order/confirm.html.twig', [
             'controller_name' => 'Confirmation de votre commande : ' . $order->getNumOrder(),
