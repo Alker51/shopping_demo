@@ -84,13 +84,11 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'app_product_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_product_delete')]
     #[IsGranted('ROLE_ADMIN', message: 'You are not allowed to delete products.')]
-    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
+    public function delete(Product $product, ProductRepository $productRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            $productRepository->remove($product, true);
-        }
+        $productRepository->remove($product, true);
 
         return $this->redirectToRoute('app_product_manage', [], Response::HTTP_SEE_OTHER);
     }

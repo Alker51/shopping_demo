@@ -19,7 +19,14 @@
         <div id="productsList">
             {% for product in products %}
                 {% if product.display == true %}
-                    <a id="productItem" href="{{ path('app_product_show', {'id' : product.id}) }}"><img id="productImage" src="{{ product.picturesUrls }}" alt="{{ product.productName }}"/><div id="productTitle">{{ product.productName }} -- PRIX : {{ product.price }} € </div></a>
+                    <a id="productItem" href="{{ path('app_product_show', {'id' : product.id}) }}">
+                        <img id="productImage" src="{{ product.picturesUrls }}" alt="{{ product.productName }}"/>
+                        <div id="productTitle">
+                            {{ product.productName }}
+                            <br>
+                            PRIX : {% if product.discountedPrice is null %}{{ product.price }}{% else %}{{ product.discountedPrice }}{% endif %} €
+                        </div>
+                    </a>
                 {% endif %}
             {% endfor %}
         </div>
