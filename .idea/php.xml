@@ -3,11 +3,6 @@
   <component name="LaravelPintOptionsConfiguration">
     <option name="ruleset" value="laravel" />
   </component>
-  <component name="MessDetector">
-    <phpmd_settings>
-      <MessDetectorConfiguration tool_path="$PROJECT_DIR$/../vendor/bin/phpmd" />
-    </phpmd_settings>
-  </component>
   <component name="MessDetectorOptionsConfiguration">
     <option name="codeSize" value="true" />
     <option name="controversial" value="true" />
@@ -25,7 +20,7 @@
   </component>
   <component name="PhpCSFixer">
     <phpcsfixer_settings>
-      <PhpCSFixerConfiguration standards="PSR1;PSR2;Symfony;DoctrineAnnotation;PHP70Migration;PHP71Migration" tool_path="$PROJECT_DIR$/../vendor/bin/php-cs-fixer" timeout="10000" />
+      <PhpCSFixerConfiguration standards="PSR1;PSR2;Symfony;DoctrineAnnotation;PHP70Migration;PHP71Migration" timeout="10000" />
     </phpcsfixer_settings>
   </component>
   <component name="PhpIncludePathManager">
