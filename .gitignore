@@ -15,4 +15,6 @@
 
 ###> Fichier de cache ###
 *.cache
+/.idea/
+/.idea/*
 ###< Fichier de cache ###
