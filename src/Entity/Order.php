@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
-#[ApiResource]
+#[ApiResource(security: "is_granted('IS_AUTHENTICATED_FULLY') && is_granted('ROLE_ADMIN')")]
 class Order
 {
     #[ORM\Id]

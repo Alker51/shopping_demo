@@ -7,7 +7,7 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ApiResource]
+#[ApiResource(security: "is_granted('IS_AUTHENTICATED_FULLY') && is_granted('ROLE_ADMIN')")]
 class Product
 {
     #[ORM\Id]
