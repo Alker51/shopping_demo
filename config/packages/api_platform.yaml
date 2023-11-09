@@ -1,6 +1,6 @@
 api_platform:
-    title: Hello API Platform
-    version: 1.0.0
+    title: Shopping_Demo API
+    version: 0.0.1
     formats:
         jsonld: ['application/ld+json']
     docs_formats:
