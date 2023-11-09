@@ -7,7 +7,7 @@ use App\Repository\StateOrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StateOrderRepository::class)]
-#[ApiResource(security: "is_granted('IS_AUTHENTICATED_FULLY') && is_granted('ROLE_ADMIN')")]
+#[ApiResource]
 class StateOrder
 {
     const STATE = [
