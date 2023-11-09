@@ -22,6 +22,7 @@ Ce site est un exemple de site e-commerce.
 ### Idée pour la suite du projet
 
 * API Plateform pour la communication entre Back et Front.
+* Il faut améliorer la securité de l'API!!
 * React ou autre framework JS pour Front-end.
 
 ##### Ce readme doit être amélioré.
