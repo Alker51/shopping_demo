@@ -1,5 +1,48 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div id="infoDiv">
+    {{ form_errors(form) }}
+    <div id="shippingInfo">
+        <h3>Adresse de livraison</h3>
+
+        <div id="col">
+            {{ form_row(form.shippingFirstName) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.shippingLastName) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.shippingAdress) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.shippingPostCode) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.shippingTown) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.shippingCountry) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.shippingPhoneNum) }}
+        </div>
+    </div>
+    <div id="billingInfo">
+        <h3>Adresse de Facturation</h3>
+
+        <div id="col">
+            {{ form_row(form.billingAdress) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.billingPostCode) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.billingTown) }}
+        </div>
+        <div id="col">
+            {{ form_row(form.billingCountry) }}
+        </div>
+    </div>
     <input type="hidden" name="cart" value="{{ cart }}">
+</div>
 <button class="btn btn-primary">{{ button_label|default('Valider mes informations') }}</button>
 {{ form_end(form) }}

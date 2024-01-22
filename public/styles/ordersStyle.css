@@ -12,3 +12,30 @@ div#orderInformations {
 h1#title {
     text-align: center;
 }
+
+div#infoDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+div#col {
+    margin: 1%;
+}
+
+div#col > * {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div#col > * > label {
+    margin-right: 3%;
+    width: fit-content;
+    white-space: nowrap;
+    flex-grow: 1;
+}
+
+div#col > * > input {
+    flex-grow: 2;
+}
