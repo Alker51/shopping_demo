@@ -113,11 +113,11 @@ class ProductController extends AbstractController
     private function calculatedDiscountPrice(Product $product, ProductRepository $productRepository) : Product
     {
             if(!is_null($product->getDiscount()) && !is_null($product->getPrice())) {
-                $discountedPriceNew = round($product->getPrice() * ($product->getDiscount() / 100), 2);
+                $discountedPriceNew = $product->getPrice() - (round($product->getPrice() * ($product->getDiscount() / 100), 2));
                 $discountedPriceOld = $product->getDiscountedPrice();
                 
                 if($discountedPriceOld !== $discountedPriceNew){
-                    $product->setDiscountedPrice(round($product->getPrice() * ($product->getDiscount() / 100), 2));
+                    $product->setDiscountedPrice($product->getPrice() -  round($product->getPrice() * ($product->getDiscount() / 100), 2));
 
                     $productRepository->save($product, true);
                 }
