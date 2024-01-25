@@ -15,7 +15,7 @@ class CreditCard
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $cardNumber = null;
+    private ?string $cardNumber = null;
 
     #[ORM\Column]
     private ?int $CardVerificationValue = null;
@@ -31,12 +31,12 @@ class CreditCard
         return $this->id;
     }
 
-    public function getCardNumber(): ?int
+    public function getCardNumber(): ?string
     {
         return $this->cardNumber;
     }
 
-    public function setCardNumber(int $cardNumber): static
+    public function setCardNumber(string $cardNumber): static
     {
         $this->cardNumber = $cardNumber;
 
