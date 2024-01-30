@@ -74,6 +74,9 @@ class Order
     #[ORM\Column(length: 255)]
     private ?string $numOrder = null;
 
+    #[ORM\Column]
+    private ?bool $paid = null;
+
     public function __construct()
     {
         $this->Products = new ArrayCollection();
@@ -308,6 +311,18 @@ class Order
     public function setNumOrder(string $numOrder): static
     {
         $this->numOrder = $numOrder;
+
+        return $this;
+    }
+
+    public function isPaid(): ?bool
+    {
+        return $this->paid;
+    }
+
+    public function setPaid(bool $paid): static
+    {
+        $this->paid = $paid;
 
         return $this;
     }

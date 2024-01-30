@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement Commande{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('styles/ordersStyle.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <h1 id="title">Complete your Order</h1>
+
+    {{ include('payment/_form.html.twig', {'order': order }) }}
+
+    <a href="{{ path('app_cart_index') }}">back to cart</a>
+{% endblock %}

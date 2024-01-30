@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\CreditCard;
 use App\Entity\Order;
 use App\Entity\StateOrder;
 use App\Form\OrderType;
+use App\Form\PaymentType;
+use App\Repository\CreditCardRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
@@ -88,9 +91,10 @@ class OrderController extends AbstractController
             $order->setNumOrder('SHPG-');
             $order->setOrderDate(new \DateTime());
             $order->setOrderState(StateOrder::STATE['NO_VALID']);
+            $order->setPaid(false);
             $orderRepository->save($order, true);
 
-            return $this->redirectToRoute('app_order_validation', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_order_payment', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
         } elseif ($form->isSubmitted() && !$form->isValid()) {
             return $this->redirectToRoute('app_order_error', [], Response::HTTP_SEE_OTHER);
         }
@@ -206,6 +210,41 @@ class OrderController extends AbstractController
             'order' => $order,
             'user' => $order->getUserCommand(),
             'products' => $order->getProducts()->toArray()
+        ]);
+    }
+
+    #[Route('/payment/{id}', name: 'payment')]
+    public function payment(Request $request, Order $order, CreditCardRepository $creditCardRepository, OrderRepository $orderRepository): Response
+    {
+        $creditCard = new CreditCard();
+        $form = $this->createForm(PaymentType::class, $creditCard);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $res = false;
+            $card = $creditCardRepository->findAll();
+            $date = new \DateTime();
+
+            foreach ($card as $uniqueCard){
+                if($uniqueCard->getCardNumber() == $creditCard->getCardNumber())
+                    if($uniqueCard->isValid() && ($uniqueCard->getExpirationDate() > $date))
+                        $res = true;
+            }
+
+            if(!$res)
+                return $this->redirectToRoute('app_order_error', [], Response::HTTP_SEE_OTHER);
+
+            $order->setPaid(true);
+            $orderRepository->save($order, true);
+
+            return $this->redirectToRoute('app_order_validation', ['id' => $order->getId()], Response::HTTP_SEE_OTHER);
+        } elseif ($form->isSubmitted() && !$form->isValid()) {
+            return $this->redirectToRoute('app_order_error', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('payment/complete.html.twig', [
+            'order' => $order,
+            'form' => $form,
         ]);
     }
 }

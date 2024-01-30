@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\CreditCard;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use DateTime;
 
 /**
  * @extends ServiceEntityRepository<CreditCard>
@@ -21,28 +22,41 @@ class CreditCardRepository extends ServiceEntityRepository
         parent::__construct($registry, CreditCard::class);
     }
 
-//    /**
-//     * @return CreditCard[] Returns an array of CreditCard objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     *  Check if a card is valid.
+     *
+     * @param string $cardNumber Number of credit card to verify information
+     * @return bool True if OK, false if KO.
+     */
+    public function checkIfCardValid(string $cardNumber) : Boolean
+    {
+        $result = false;
 
-//    public function findOneBySomeField($value): ?CreditCard
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $card = $this->findOneBy(['cardNumber' => $cardNumber]);
+        $dateNow = new DateTime();
+
+        if(!empty($card))
+            if($card->isValid() && $dateNow < $card->getExpirationDate())
+                $result = true;
+
+        return $result;
+    }
+
+    /**
+     * Function to verify if a card had enough money.
+     *
+     * @param string $cardNumber Number of credit card to verify information
+     * @param float $moneyTaken Amount of the command
+     * @return bool  True if OK, false if KO.
+     */
+    public function checkIfEnoughtMoney(string $cardNumber, float $moneyTaken) : Boolean
+    {
+        $card = $this->findOneBy(['cardNumber' => $cardNumber]);
+        $result = false;
+
+        if($this->checkIfCardValid($cardNumber) && $card->getBalance() > $moneyTaken)
+            $result = true;
+
+        return $result;
+    }
 }
