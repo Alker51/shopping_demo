@@ -49,15 +49,17 @@ final class CreditCardFactory extends ModelFactory
         $faker = Factory::create('fr_FR');
 
         $name = $faker->name();
-        $cvv = $faker->randomNumber(3);
+        $cvv = $faker->numberBetween(100, 999);
         $date = $faker->creditCardExpirationDate();
-        $number = (string) $faker->randomNumber(16);
+        $number = (string) $faker->numberBetween(1000000000000000, 9999999999999999);
+        $valid = $faker->boolean();
 
         return [
             'CardVerificationValue' => $cvv,
             'ExpirationDate' => $date,
             'cardHolderName' => $name,
             'cardNumber' => $number,
+            'valid' => $valid
         ];
     }
 

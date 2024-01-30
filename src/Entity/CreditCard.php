@@ -26,6 +26,9 @@ class CreditCard
     #[ORM\Column(length: 255)]
     private ?string $cardHolderName = null;
 
+    #[ORM\Column]
+    private ?bool $valid = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class CreditCard
     public function setCardHolderName(string $cardHolderName): static
     {
         $this->cardHolderName = $cardHolderName;
+
+        return $this;
+    }
+
+    public function isValid(): ?bool
+    {
+        return $this->valid;
+    }
+
+    public function setValid(bool $valid): static
+    {
+        $this->valid = $valid;
 
         return $this;
     }
