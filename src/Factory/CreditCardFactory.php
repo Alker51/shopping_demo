@@ -52,6 +52,7 @@ final class CreditCardFactory extends ModelFactory
         $cvv = $faker->numberBetween(100, 999);
         $date = $faker->creditCardExpirationDate();
         $number = (string) $faker->numberBetween(1000000000000000, 9999999999999999);
+        $balance = (float) rand(0, 10000);
         $valid = $faker->boolean();
 
         return [
@@ -59,7 +60,8 @@ final class CreditCardFactory extends ModelFactory
             'ExpirationDate' => $date,
             'cardHolderName' => $name,
             'cardNumber' => $number,
-            'valid' => $valid
+            'valid' => $valid,
+            'balance' => $balance
         ];
     }
 

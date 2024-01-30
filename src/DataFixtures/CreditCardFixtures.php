@@ -21,6 +21,7 @@ class CreditCardFixtures extends Fixture
         $creditCard->setCardVerificationValue(987);
         $creditCard->setValid(true);
         $creditCard->setExpirationDate($date);
+        $creditCard->setBalance(4890.56);
 
         $manager->persist($creditCard);
         $manager->flush();

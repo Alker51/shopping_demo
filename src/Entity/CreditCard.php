@@ -29,6 +29,9 @@ class CreditCard
     #[ORM\Column]
     private ?bool $valid = null;
 
+    #[ORM\Column]
+    private ?float $balance = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class CreditCard
     public function setValid(bool $valid): static
     {
         $this->valid = $valid;
+
+        return $this;
+    }
+
+    public function getBalance(): ?float
+    {
+        return $this->balance;
+    }
+
+    public function setBalance(float $balance): static
+    {
+        $this->balance = $balance;
 
         return $this;
     }
