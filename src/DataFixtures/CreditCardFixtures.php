@@ -15,7 +15,6 @@ class CreditCardFixtures extends Fixture
     {
         $date = new DateTime("2026-12-01 00:00:00");
         $creditCard = new CreditCard();
-
         $creditCard->setCardHolderName("Alker Wolf");
         $creditCard->setCardNumber(1234);
         $creditCard->setCardVerificationValue(987);
