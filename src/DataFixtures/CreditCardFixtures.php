@@ -17,7 +17,7 @@ class CreditCardFixtures extends Fixture
         $creditCard = new CreditCard();
 
         $creditCard->setCardHolderName("Alker Wolf");
-        $creditCard->setCardNumber("1234567812345678");
+        $creditCard->setCardNumber(1234);
         $creditCard->setCardVerificationValue(987);
         $creditCard->setValid(true);
         $creditCard->setExpirationDate($date);
