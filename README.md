@@ -26,3 +26,7 @@ Ce site est un exemple de site e-commerce.
 * React ou autre framework JS pour Front-end.
 
 ##### Ce readme doit être amélioré.
+
+### NOTE : 
+
+* Changer le type du numéro de carte en char pour stocker le numéro long (16 caracs) dans la base.
